@@ -9,6 +9,13 @@ import Larvae from "./pages/larvae";
 import LarvaDetails from "./pages/larvae/LarvaDetails";
 import DroneDeatils from "./pages/meat/droneDetails";
 import MeatDetails from "./pages/meat/meatDetails";
+import Options from "./pages/more/options";
+import Achievements from "./pages/more/achievements";
+import Statistics from "./pages/more/statistics";
+import Changelog from "./pages/more/changelog";
+import Contact from "./pages/more/contact";
+import All from "./pages/more/all";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -27,6 +34,12 @@ function App() {
             }>
               <Route path="larva" element={<LarvaDetails />} />
             </Route>
+            <Route path="/options" element={<Options />} />
+            <Route path="/statistics" element={<Statistics />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/changelog" element={<Changelog />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/all" element={<All />} />
           </Routes>
         </Layout>
       </BrowserRouter>

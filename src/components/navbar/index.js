@@ -8,12 +8,22 @@ import {
     BsBarChartFill,
     BsChatFill,
 } from 'react-icons/bs';
+import {
+    GiSpiderAlt
+} from "react-icons/gi";
 import { Link } from 'react-router-dom';
 import { AiOutlineContainer } from "react-icons/ai";
 import { BsFillFileEarmarkFontFill } from "react-icons/bs";
-import { Nav, NavDropdown } from 'react-bootstrap'
+import { Nav, NavDropdown } from 'react-bootstrap';
 
 const Navbar = () => {
+    const styles = {
+        textformat: {
+            textDecoration: "none",
+            color: "black",
+            marginLeft: 5,
+           }
+    };
     return (
         <Nav variant="tabs" defaultActiveKey="meat">
             <Nav.Item>
@@ -61,32 +71,43 @@ const Navbar = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item eventKey="4.4">
                     {' '}
-                    <BsGearFill /> Options
+                    <BsGearFill /> 
+                    <Link style = {styles.textformat} to="/options">Options</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">
+                <NavDropdown.Item eventKey="4.5">
                     {' '}
-                    <BsCheckLg /> Achievements
+                    <BsCheckLg /> 
+                    <Link style = {styles.textformat} to="/achievements">Achievements</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">
+                <NavDropdown.Item eventKey="4.6">
                     {' '}
-                    <BsBarChartFill /> Statistics
+                    <BsBarChartFill /> 
+                    <Link style = {styles.textformat} to="/statistics">Statistics</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">
+                <NavDropdown.Item eventKey="4.7">
                     {' '}
-                    <BsFillFileEarmarkFontFill /> Patch Notes
+                    <BsFillFileEarmarkFontFill /> 
+                    <Link style = {styles.textformat} to="/changelog">Patch Notes</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">
+                <NavDropdown.Item eventKey="4.8">
                     {' '}
-                    <BsPersonFill /> Community
+                    <BsPersonFill /> 
+                    <Link style = {styles.textformat} to="http://reddit.com/">Community</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">
+                <NavDropdown.Item eventKey="4.9">
                     {' '}
-                    <BsChatFill /> Send Feedback
+                    <BsChatFill />
+                    <Link style = {styles.textformat} to="/contact"> Send Feedback</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">Report Problem</NavDropdown.Item>
-                <NavDropdown.Item eventKey="4.4">
+                <NavDropdown.Item eventKey="4.10">
                     {' '}
-                    <AiOutlineContainer /> Show all units
+                    <GiSpiderAlt />
+                    <Link style = {styles.textformat} to="/conatct">Report Problem</Link>    
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="4.11">
+                    {' '}
+                    <AiOutlineContainer /> 
+                    <Link style = {styles.textformat} to="/all">Show all units</Link>
                 </NavDropdown.Item>
             </NavDropdown>
         </Nav>

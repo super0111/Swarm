@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { Container, Card, Nav } from 'react-bootstrap'
-import classes from './layout.module.css'
+import React, { useState } from 'react';
+import { Container, Card, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import classes from './layout.module.css';
 import Viewwrap from './viewwrap';
 import Navbar from "./navbar";
 
@@ -25,6 +26,16 @@ const Layout = (props) => {
         </Card.Body>
       </Card>
       <Card className={classes.tutorial}>
+        <Card.Body>
+          <Card.Text>
+            Welcome to Swarm Simulator. Starting with just a few larvae and a small pile of meat, grow a massive swarm of giant bugs.
+            <br></br><br></br>
+            Your brood starts its life with a small pile of meat and a single larva-producing hatchery. Larvae mutate into other units. Begin your growth by using your meat and larvae to hatch some 
+            <Link to="/meat/drone" className={classes.toDrone}>{" "}drones</Link>.
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      <Card className={classes.tutorial1}>
         <Card.Body>
           <Card.Text>
             You lead a small brood of worker drones. Drones gather meat. Use
