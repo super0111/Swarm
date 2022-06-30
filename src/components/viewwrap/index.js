@@ -12,7 +12,7 @@ const Viewwrap = (props) => {
               <strong>www.swarmsim.com</strong>. You're in the right place.
             </Card.Text>
             <Nav>
-              <Nav.Link href="#home" className={classes.old_site} style={{  }}>
+              <Nav.Link href="/export" className={classes.old_site} style={{  }}>
                 Looking for your saved progress from the old site?
               </Nav.Link>
             </Nav>

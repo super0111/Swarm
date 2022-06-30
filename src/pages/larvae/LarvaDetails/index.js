@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button, ProgressBar } from "react-bootstrap"
+import { Button, ProgressBar } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import { BsXLg } from "react-icons/bs";
 import classes from "../larvae.module.css"
@@ -29,12 +29,25 @@ const LarvaDetails = () => {
                 variant="custom"
                 height={30}
             />
-            <Button  className={classes.disable_btn}>Can't buy</Button>
-            <p>Expansion (<p>0</p>) </p>
+            <Button
+                disabled
+                variant="outline-secondary"
+                className={classes.disable_btn}
+            >
+                Can't buy
+            </Button>
+            <p>Expansion (0) </p>
             <p>Each expansion increases your hatcheries' larvae production by 10%. Currently, your expansions increase hatchery production by 0%.</p>
             <p>Next upgrade costs 10 territory</p>
             <ProgressBar  now={ExpPercentage} label={`${ExpPercentage}% `} />
-            <Button className={classes.disable_btn}>Can't buy</Button>
+            <Button
+                disabled
+                variant="outline-secondary"
+                className={classes.disable_btn}
+                style={{marginBottom: 50}}
+            >
+                Can't buy
+            </Button>
             <div className={classes.close_btn}>
                 <BsXLg />
             </div>

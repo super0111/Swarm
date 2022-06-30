@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 220px;
-    padding: 9px 10px;
+    width: 280px;
+    padding: 9px 20px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -40,10 +40,13 @@
     text-underline-offset: 2px;
 }
 .disable_btn {
-    background-color: none;
+    background-color: none!important;
+    border: 1px solid rgb(186, 186, 186);
     font-size: 14px;
     line-height: 1.428571429;
     color: #333;
+    width: 100%;
+    margin-bottom: 10px;
 }
 .close_btn {
     position: absolute;
