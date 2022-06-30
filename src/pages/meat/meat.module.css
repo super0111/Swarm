@@ -1,0 +1,37 @@
+.meat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 150px;
+}
+.drone {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 40px;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    cursor: pointer;
+}
+.drone:hover {
+    background-color:#f5f5f5;
+}
+.drone_name {
+    font-size: 16px;
+    color: #337ab7;
+}
+.drone_name:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: #23659e;
+}
+.drone_value {
+    font-size: 16px;
+}
+.top_btn {
+    font-size: 24px;
+    font-weight: 500;
+    color: #337ab7;
+}
+.top_btn:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
