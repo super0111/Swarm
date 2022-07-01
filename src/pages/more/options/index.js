@@ -35,10 +35,9 @@ const Options = () => {
             </div>
             <Form.Range />
             <div className={classes.flex}>
-                <span>About
-                    <Form.Check.Input type='number' isValid className={classes.inputNumber} />
-                    fps. Time between frames: 37ms
-                </span>
+                <span>About</span>
+                <Form.Check.Input type='number' isValid className={classes.inputNumber} />
+                <span>fps. Time between frames: 37ms</span>
             </div>
             <br></br>
            <p>Reduce this setting if the game is slowing down your computer. This doesn't affect gameplay; your units won't produce resources any faster or slower.</p>
@@ -127,7 +126,7 @@ const Options = () => {
                 variant="outline-secondary"
                 className={classes.dataClear_btn}
             >
-                <AiFillWarning size={20} />
+                <AiFillWarning size={18} />
                 Wipe all saved data and start over 
             </Button>
             <p>You started playing an hour ago.</p>

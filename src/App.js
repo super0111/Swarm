@@ -35,8 +35,8 @@ function App() {
               <Route path="larva" element={<LarvaDetails />} />
             </Route>
             <Route path="/options" element={<Options />} />
-            <Route path="/statistics" element={<Statistics />} />
             <Route path="/achievements" element={<Achievements />} />
+            <Route path="/statistics" element={<Statistics />} />
             <Route path="/changelog" element={<Changelog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/all" element={<All />} />
