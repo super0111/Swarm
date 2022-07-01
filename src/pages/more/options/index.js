@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import { Container, Form, Dropdown, DropdownButton, MenuItem, Card } from "react-bootstrap"
+import { Link } from 'react-router-dom';
+import { Container, Form, Dropdown, Card, Button } from "react-bootstrap"
 import { BsFillEyeFill, BsFilm, BsDownload } from "react-icons/bs";
 import { ImBarcode, ImImage } from "react-icons/im";
+import { AiFillWarning, AiOutlineCloudUpload } from "react-icons/ai";
 import classes from "./options.module.css"
 
 const Options = () => {
@@ -13,9 +15,6 @@ const Options = () => {
     const handleFocus = (event) => {
         event.target.select();
     };
-    const handleShow = () => {
-        setIsShow(!isShow)
-    }
   
     return (
         <Container>
@@ -76,7 +75,7 @@ const Options = () => {
                 <p>Examples: 00:16, 2:43, 2:30:00, 23 days 7 hours, 2 months 7 days, 1 years 2 months</p>
             </div>
             <Dropdown onSelect={handleSelect}>
-                <Dropdown.Toggle className={classes.toggle_btn} id="dropdown-basic">
+                <Dropdown.Toggle className={classes.toggle_btn} variant="outline-secondary" id="dropdown-basic">
                    <ImImage />Theme<strong style={{color: "red"}}>(BETA)</strong>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -124,7 +123,25 @@ const Options = () => {
                     </Card.Body>
                 </Card> : ""
             }
-        
+            <Button
+                variant="outline-secondary"
+                className={classes.dataClear_btn}
+            >
+                <AiFillWarning size={20} />
+                Wipe all saved data and start over 
+            </Button>
+            <p>You started playing an hour ago.</p>
+            <div className={classes.flex}>
+                <AiOutlineCloudUpload size={20}/>
+                <strong style={{marginLeft: 5}}>Analytics</strong>
+            </div>
+            <p>Swarm Simulator, like many websites, uses Google Analytics to track actions you take while playing. We use this data to improve the game. Feel free to opt out of Google Analytics.</p>
+            <Link
+                to="https://policies.google.com/technologies/partner-sites"
+                className={classes.googleUse}
+            >
+                How Google uses data when you use our partners' sites or apps
+            </Link>
         </Container>
     )
 }
