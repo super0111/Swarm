@@ -3,7 +3,7 @@ import { Container, Card, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import classes from './layout.module.css';
 import Viewwrap from './viewwrap';
-import Navbar from "./navbar";
+import Navbar from "./layout/navbar";
 
 const Layout = (props) => {
   const [ close, setClose ] = useState(false);

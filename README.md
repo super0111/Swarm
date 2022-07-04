@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+[Swarm Simulator](https://swarmsim.github.io/)
+==============================================
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Build Status](https://travis-ci.org/swarmsim/swarm.svg?branch=master)](https://travis-ci.org/swarmsim/swarm)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/swarmsim/swarm)
+<!-- [![Dependency Status](https://david-dm.org/swarmsim/swarm.svg)](https://david-dm.org/swarmsim/swarm) -->
+<!-- [![devDependency Status](https://david-dm.org/swarmsim/swarm/dev-status.svg)](https://david-dm.org/swarmsim/swarm#info=devDependencies) -->
+<!-- [![Bower dependency Status](https://gemnasium.com/swarmsim/swarm.svg)](https://gemnasium.com/swarmsim/swarm) -->
 
-## Available Scripts
+Starting with only a few larvae and a small pile of meat, build a merciless swarm of trillions of giant alien bugs.
 
-In the project directory, you can run:
+Built with love by Evan Rosson using
+[Coffeescript](http://coffeescript.org),
+[AngularJS](https://angularjs.org),
+[Yeoman](http://yeoman.io)'s [generator-angular](https://github.com/yeoman/generator-angular),
+Evan's own [swarm-numberformat](https://github.com/erosson/swarm-numberformat),
+and [other libraries](https://github.com/swarmsim/swarm/blob/master/bower.json)
+packaged by [Bower](http://bower.io/).
+Inspired by [the best Starcraft race](http://us.battle.net/sc2/en/game/race/zerg/ "I haven't violated copyright I think, please don't sue me Blizz").
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Community [subreddit](http://www.reddit.com/r/swarmsim/) and [wiki](http://www.reddit.com/r/swarmsim/wiki/).
+* [Spreadsheet with game data](https://docs.google.com/spreadsheets/d/1ughCy983eK-SPIcDYPsjOitVZzY10WdI2MGGrmxzxF4/pubhtml),
+imported by [Tabletop](https://github.com/jsoma/tabletop).
+[Edit it, if you think you can](https://docs.google.com/spreadsheets/d/1ughCy983eK-SPIcDYPsjOitVZzY10WdI2MGGrmxzxF4/edit "spoiler: you can't").
+* [Production deployment](https://swarmsim.github.io/),
+and corresponding [autogenerated repository](https://github.com/swarmsim/swarmsim.github.io "grunt deploy-prod").
+* [Staging (test) deployment](https://staging.swarmsim.com),
+and corresponding [autogenerated gh-pages branch](https://github.com/swarmsim-staging/swarmsim-staging.github.io/tree/master "grunt deploy-staging").
+* [Google Analytics](https://www.google.com/analytics/web/?hl=en#report/visitors-overview/a53523462w86246489p89488811/) >
+[realtime stats](https://www.google.com/analytics/web/?hl=en#realtime/rt-overview/a53523462w86246489p89488811/).
+  * [Public stats](http://www.seethestats.com/site/swarmsim.github.io/STSlT5DxvZf)
+* [Webmaster Tools](https://www.google.com/webmasters/tools/dashboard?hl=en&siteUrl=http://swarmsim.github.io/&authuser=0). [Links](https://www.google.com/webmasters/tools/external-links?hl=en&siteUrl=http://swarmsim.github.io/&authuser=0).
+* Kongregate save sync server: [source](https://github.com/swarmsim/swarm-server), [prod environment](https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/application/overview?applicationName=swarm-server)

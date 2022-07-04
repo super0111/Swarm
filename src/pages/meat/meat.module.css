@@ -1,3 +1,6 @@
+.height {
+    height: 350px;
+}
 .meat {
     display: flex;
     justify-content: space-between;
@@ -51,6 +54,7 @@
 .droneDetails, .meatDetails {
     position: relative;
     padding: 20px 0;
+    margin-bottom: 50px;
 }
 .divider {
     border-bottom: 1px solid rgb(230 230 230);

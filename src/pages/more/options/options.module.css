@@ -25,10 +25,12 @@
     outline: none;
     outline-color: #555555;
 }
-.cerulean {
+.selectedTheme {
     color: #2fa4e7;
+    text-decoration: none;
 }
-.cerulean:hover {
+.selectedTheme:hover {
+    color: #2fa4e7;
     text-decoration: underline;
 }
 .copy_btn {

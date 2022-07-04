@@ -1,50 +1,95 @@
+import { useCookies } from "react-cookie";
 import { Container, Table } from "react-bootstrap";
+import moment from 'moment';
 import classes from "./statistics.module.css";
 
 const Statistics = () => {
-    return (
-        <Container>
-          <h1>Statistics</h1>
-          <div className={classes.divider1}></div>
+  const [ cookies ] = useCookies([
+    "velocity",
+    "larvaeCount", 
+    "meatCount", 
+    "droneCount", 
+    "hatcheryCount", 
+    "droneTime",
+    "droneClick",
+    "hatcheryTime",
+    "hatcheryClick",
+    "startTime",
+  ]);
+
+  return (
+    <Container>
+      <h1>Statistics</h1>
+      <div className={classes.divider1}></div>
+      <Table responsive>
+        <thead>
+          <tr className={classes.divider2}>
+            <th> Unit</th>
+            <th>First Bought</th>
+            <th>Clicks</th>
+            <th>Bought Manually</th>
+            <th>Twins</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className={classes.divider1}>
+            <td>Meat</td>
+          </tr>
+          <tr className={classes.divider1}>
+            <td>Larva</td>
+          </tr >
+          <tr className={classes.divider1}>
+            <td>Crystal</td>
+          </tr>
+          <tr className={classes.divider1}>
+            <td>Drone</td>
+            <td>{ cookies.droneTime ? moment(cookies.droneTime).format('hh:mm:ss') : ""}</td>
+            <td>{cookies.droneClick}</td>
+            <td>{cookies.droneCount}</td>
+            <td>{cookies.droneCount}</td>
+          </tr>
+        </tbody>
+      </Table>
+      <div>
+        {
+          cookies.hatcheryTime == undefined ? <span>No upgrades purchased</span> :
           <Table responsive>
             <thead>
               <tr className={classes.divider2}>
-                <th> Unit</th>
+                <th> Upgrade</th>
                 <th>First Bought</th>
                 <th>Clicks</th>
-                <th>Bought Manually</th>
-                <th>Twins</th>
+                <th>Total Bought</th>
               </tr>
             </thead>
             <tbody>
               <tr className={classes.divider1}>
-                <td>Meat</td>
-              </tr>
-              <tr className={classes.divider1}>
-                <td>Larva</td>
+                <td>Hatchery</td>
+                <td>{ cookies.hatcheryTime ? moment(cookies.hatcheryTime).format('hh:mm:ss') : ""}</td>
+                <td>{cookies.hatcheryClick}</td>
+                <td>{cookies.hatcheryClick}</td>
               </tr >
-              <tr className={classes.divider1}>
-                <td>Crystal</td>
-              </tr>
             </tbody>
           </Table>
-          <div>
-            <span>No upgrades purchased</span>
-            <div className={classes.flex}>
-              <div className={classes.flexCol1}>
-                <strong>Save File Size</strong>
-                <strong>Start Date</strong>
-                <strong>Last Ascended</strong>
-              </div>
-              <div className={classes.flexCol2}>
-                <span>1,005 base64 chars</span>
-                <span>3 hours ago - Fri Jul 01 2022 08:37:32 GMT+0200 (Central European Summer Time)</span>
-                <span>never</span>
-              </div>
-            </div>
+        }
+        <div className={classes.flex}>
+          <div className={classes.flexCol1}>
+            <strong>Save File Size</strong>
+            <strong>Start Date</strong>
+            <strong>Last Ascended</strong>
           </div>
-        </Container>
-    )
+          <div className={classes.flexCol2}>
+            <span>1,005 base64 chars</span>
+            <span>
+              {moment(cookies.startTime).fromNow()} - 
+              { moment(cookies.startTime).format('MMMM Do YYYY, h:mm:ss a') }
+            </span>
+            <span>never</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  )
 }
 
 export default Statistics
