@@ -4,10 +4,10 @@ import { useCookies } from "react-cookie";
 const Context = createContext();
 
 const AppProvider = ({children}) => {
-const [ cookies, setCookie, removeCookie ] = useCookies([
-  "velocity", 
-  "larvaeCount", 
-  "meatCount", 
+const [ cookies, setCookie ] = useCookies([
+  "velocity",
+  "larvaeCount",
+  "meatCount",
   "droneCount",
   "hatcheryCount",
   "startCount",
@@ -18,11 +18,10 @@ const [ meatNum, setMeatNum ] = useState(Number(cookies.meatCount) || 35);
 const [ droneCount, setDroneCount ] = useState(Number(cookies.droneCount) || 0);
 const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 0);
 const [ startCount, setStartCount ]= useState(Number(cookies.startCount) || 0);
-const [ selectedOption, setSelectedOption ] = useState("seconds");
 
 /******** Frist Render Time *********/
 useEffect(() => {
-  if(Number(cookies.startCount == 0)) {
+  if(Number(cookies.startCount) === 0) {
     setStartCount(Number(cookies.startCount) + 1);
     const startTime = new Date();
     setCookie("startTime", startTime, { path: '/' });
@@ -70,18 +69,21 @@ useEffect(() => {
     increasemeat();
     updateMeatCookie();
   }, [meatNum])
+
   
   useEffect (() => {
-    setCookie("velocity","seconds", { path: '/' });
+    setCookie("velocity", "seconds", { path: '/' });
   }, [cookies.velocity === undefined])
+
+  useEffect(() => {
+    setCookie("hatcheryCount", 0, {path: "/"})
+  }, [])
 
   return (
     <Context.Provider value={{
-      selectedOption, setSelectedOption,
-      larvaeNum, setLarvaeNum, 
       droneCount, setDroneCount,
-      meatNum, setMeatNum,
-      hatcheryCount, setHatcheryCount }}
+      hatcheryCount, setHatcheryCount,
+    }}
     >
       {children}
     </Context.Provider>

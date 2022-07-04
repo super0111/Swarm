@@ -33,3 +33,25 @@
     font-size: 85%;
     color: #999;
 }
+
+.cardItem {
+    background-color:#dff0d8 !important;
+    margin: 20px 0;
+}
+.NotifyBody {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.notify_close_btn {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+.close_btn {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5d7488;
+    cursor: pointer;
+}

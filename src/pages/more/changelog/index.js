@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Container, Card, ListGroup, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Card, ListGroup } from "react-bootstrap";
+import { BsCheckLg, BsXLg } from "react-icons/bs";
+
 import classes from "./changelog.module.css";
 
 const headers = [
@@ -31,6 +32,11 @@ const Changelog = () => {
     setIsShowTrue(!isShowTrue);
   }
 
+  const [ isNotifyShow, setIsNotifyShow ] = useState(true);
+  const handleClose = () => {
+    setIsNotifyShow(true)
+  }
+
   return (
     <Container>
       <h1>Patch Notes</h1>
@@ -59,23 +65,42 @@ const Changelog = () => {
             </Card.Header>
             { isShow === i && isShowTrue === true ?
               <ListGroup variant="flush">
-              { versions.map((version, i) => (
-                <ListGroup.Item>
-                  <div className={classes.flex}>
-                    <h5>{version.version}</h5>
-                    <span className={classes.dateText}>{version.date}</span>
-                  </div>
-                  <ul>
-                    <li>{version.dec1}</li>
-                  </ul>
-                </ListGroup.Item>
-              ))}
-            </ListGroup> : ""
+                { versions.map((version, i) => (
+                  <ListGroup.Item>
+                    <div className={classes.flex}>
+                      <h5>{version.version}</h5>
+                      <span className={classes.dateText}>{version.date}</span>
+                    </div>
+                    <ul>
+                      <li>{version.dec1}</li>
+                    </ul>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup> : ""
             }
-            
           </Card>
         )) }
       </div>
+
+
+
+      <Card className={classes.cardItem}>
+        <Card.Body>
+          <div className={classes.NotifyBody}>
+            <BsCheckLg size={50} color="#3c763d" />
+            <div style={{textAlign: "center"}}>
+              <span style={{color: "rgb(84 131 78)"}}>Archivement  </span>
+              <h4 style={{color: "#3c763d"}}>Patchy Knowledge</h4>
+              <span style={{color: "rgb(84 131 78)"}}>Find the Patch Notes</span>
+              <span style={{color: "rgb(84 131 78)"}}>Don't take any books, please</span>
+            </div>
+            <span style={{color: "#3c763d", fontSize: "300%", fontWeight: "700"}}>+10</span>
+          </div>
+          <div className={classes.notify_close_btn} onClick={handleClose}>
+            <BsXLg className={classes.close_btn} />
+          </div>
+        </Card.Body>
+      </Card>
     </Container>
   )
 }

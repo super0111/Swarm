@@ -8,13 +8,14 @@ import { Context } from "../../../components/AppContext";
 
 const DroneDetails = () => {
   const { droneCount, setDroneCount } = useContext(Context);
-  const { meatNum } = useContext(Context);
+
   const [ cookies, setCookie ] = useCookies([
     "velocity", 
     "larvaeCount", 
     "meatCount", 
     "droneCount",
     "droneTime",
+    "hatcheryCount",
     "droneClick",
     "goodStart",
   ]);
@@ -26,7 +27,7 @@ const DroneDetails = () => {
     setDroneStateValue(e.target.value);
   }
   const handleHatch = (i) => {
-    if(Number(cookies.droneClick) == 0) {
+    if(Number(cookies.droneClick) === 0) {
       const time = new Date();
       setCookie("droneTime", time ,{ path: '/' });
     }
@@ -41,7 +42,7 @@ const DroneDetails = () => {
     setCookie("meatCount", Number(cookies.meatCount)-Number(i*10) , { path: '/' });
     setCookie("larvaeCount", Number(cookies.larvaeCount)-Number(i) , { path: '/' });
 
-    if(Number(cookies.droneCount) === 0 || cookies.droneCount == undefined) {
+    if(Number(cookies.droneCount) === 0 || cookies.droneCount === undefined) {
       setGoodStart(true);
     }
   }
@@ -112,22 +113,22 @@ const DroneDetails = () => {
         value={droneStateValue}
         onClick={ () => handleHatch( 
           droneStateValue == "" ? 1 :
-          droneStateValue*10 < meatNum ? droneStateValue : 
-          Math.trunc(meatNum/10)
+          droneStateValue*10 < Number(cookies.meatCount) ? droneStateValue : 
+          Math.trunc(Number(cookies.meatCount)/10)
         )}
       >
         Hatch 
         { droneStateValue == "" ? 1 :
-          droneStateValue*10 < meatNum ? droneStateValue : 
-          Math.trunc(meatNum/10)
+          droneStateValue*10 < Number(cookies.meatCount) ? droneStateValue : 
+          Math.trunc(Number(cookies.meatCount)/10)
         }
       </Button>
       <Button
         variant="outline-secondary"
         className={classes.hatch_btn}
-        onClick={ () => handleHatch( Math.trunc(meatNum/10) )}
+        onClick={ () => handleHatch( Math.trunc(Number(cookies.meatCount)/10) )}
       >
-        Hatch { Math.trunc(meatNum/10) }
+        Hatch { Math.trunc(Number(cookies.meatCount)/10) }
       </Button>
       <Link
         to="/meat"

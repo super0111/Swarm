@@ -11,13 +11,13 @@ const Meat = () => {
     "larvaeCount", 
     "meatCount", 
     "droneCount",
+    "hatcheryCount",
   ]);
   const [ isShow, setIsShow ] = useState(true);
   const handleClose = () => {
     console.log("click")
     setIsShow(true)
   }
-  console.log("cookies start", cookies.goodStart)
   return (
     <Row className={classes.height}>
       <Col md={3}>
@@ -36,7 +36,7 @@ const Meat = () => {
         <Outlet />
       </Col>
       {
-        cookies.goodStart == true ?
+        cookies.goodStart === true ?
         <Card className={classes.cardItem}>
           <Card.Body>
             <div className={classes.body}>
