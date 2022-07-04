@@ -15,14 +15,14 @@ const LarvaDetails = () => {
     "hatcheryClick",
     "hatcheryTime",
   ]);
-  const HatPercentage =  Math.trunc( Number(cookies.meatCount)/300*Math.pow(10, Number(cookies.hatcheryClick))*100);
-  const ExpPercentage = 1;
+  const HatPercentage = Math.trunc( Number(cookies.meatCount)/(300*Math.pow(10, Number(cookies.hatcheryClick)))*100);
+  const ExpPercentage = 0;
 
   const { hatcheryCount, setHatcheryCount } = useContext(Context);
   const [ hatcheryClick, setHatcheryClick ] = useState(Number(cookies.hatcheryClick) || 0);
 
   const handleHatchery = () => {
-    if(cookies.hatcheryClick == 0) {
+    if(Number(cookies.hatcheryClick) === 0) {
       const time = new Date();
       setCookie("hatcheryTime", time ,{ path: '/' });
     }
@@ -33,11 +33,11 @@ const LarvaDetails = () => {
   }
   useEffect(() => {
     setCookie("hatcheryCount", hatcheryCount , { path: '/' });
-  }, [hatcheryCount])
+  }, [ hatcheryCount ])
 
   useEffect(() => {
     setCookie("hatcheryClick", hatcheryClick , { path: '/' });
-  }, [hatcheryClick])
+  }, [ hatcheryClick ])
 
   return (
     <div className={classes.larvaDetails}>

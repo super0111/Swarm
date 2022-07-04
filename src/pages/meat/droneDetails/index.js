@@ -16,39 +16,40 @@ const DroneDetails = () => {
     "droneCount",
     "droneTime",
     "droneClick",
+    "goodStart",
   ]);
   const [ droneStateValue, setDroneStateValue ] = useState(0);
   const [ droneClick, setDroneClick ] = useState(Number(cookies.droneClick) || 0);
+  const [ goodStart, setGoodStart ] = useState(false);
 
   const handleDroneChange = (e) => {
     setDroneStateValue(e.target.value);
   }
   const handleHatch = (i) => {
-    console.log("props i", i)
     if(Number(cookies.droneClick) == 0) {
       const time = new Date();
       setCookie("droneTime", time ,{ path: '/' });
     }
     setDroneClick(Number(cookies.droneClick)+1)
     setCookie("droneClick", droneClick, {path: '/'});
-    
-    if(droneStateValue === 0) {
-      alert("Please enter number");
-      return
-    }
+
     if(cookies.droneCount === undefined) {
       setDroneCount(0 + Number(droneStateValue));
     }
 
-    if(Number(cookies.meatCount) < droneStateValue*10) {
-      alert("You can't hatch")
-      return
+    setDroneCount(Number(cookies.droneCount) + Number(i));
+    setCookie("meatCount", Number(cookies.meatCount)-Number(i*10) , { path: '/' });
+    setCookie("larvaeCount", Number(cookies.larvaeCount)-Number(i) , { path: '/' });
+
+    if(Number(cookies.droneCount) === 0 || cookies.droneCount == undefined) {
+      setGoodStart(true);
     }
-    setDroneCount(Number(cookies.droneCount) + Number(droneStateValue));
-    setCookie("meatCount", Number(cookies.meatCount)-droneStateValue*10 , { path: '/' });
-    setCookie("larvaeCount", Number(cookies.larvaeCount)-droneStateValue , { path: '/' });
   }
 
+  useEffect(() => {
+    setCookie("goodStart", goodStart, {path: '/'});
+  }, [goodStart])
+  
   useEffect(() => {
     setCookie("droneClick", droneClick , { path: '/' });
   }, [droneClick])
@@ -124,7 +125,7 @@ const DroneDetails = () => {
       <Button
         variant="outline-secondary"
         className={classes.hatch_btn}
-        onClick={handleHatch}
+        onClick={ () => handleHatch( Math.trunc(meatNum/10) )}
       >
         Hatch { Math.trunc(meatNum/10) }
       </Button>

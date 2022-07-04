@@ -36,7 +36,7 @@ const Options = () => {
   }
 
   const handleStart = () => {
-    removeCookie(['larvaeCount']);
+    cookies.remove('larvaeCount', { path: '/' });
   }
     
   return (

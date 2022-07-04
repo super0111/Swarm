@@ -15,6 +15,7 @@ const Larvae = () => {
     "startCount",
     "startTime",
   ]);
+  
   return (
     <Row className={classes.height}>
       <Col md={3}>

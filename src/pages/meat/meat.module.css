@@ -78,3 +78,19 @@
     color: #5d7488;
     cursor: pointer;
 }
+.cardItem {
+    background-color:#dff0d8 !important;
+    margin: 20px 0;
+    margin-top: -50px!important;
+}
+.body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.notify_close_btn {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}

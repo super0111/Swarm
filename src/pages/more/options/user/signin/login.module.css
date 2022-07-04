@@ -1,0 +1,35 @@
+.loginNav {
+  color: #337ab7;
+}
+.loginNav:hover {
+  background-color: #ececec;
+}
+.loginNavField {
+  margin-top: 10px;
+}
+.input_name {
+  font-weight: 600;
+}
+.login_btn {
+  color: #fff;
+  background-color: #5bc0de !important;
+  border-color: #46b8da !important;
+  width: 100%;
+  margin: 10px 0;
+}
+.login_btn:hover {
+  background-color: #52b3d1 !important;
+  border-color: #46b8da !important;
+}
+.forgot_btn {
+  color: #23527c !important;
+  text-decoration: none;
+  background: none !important;
+  border: none !important;
+  margin: -20px 0 0 -10px;
+}
+.forgot_btn:hover {
+  color: #23527c;
+  text-decoration: underline;
+  background: none;
+}

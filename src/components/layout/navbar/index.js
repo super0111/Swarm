@@ -11,8 +11,8 @@ import {
 import {
   GiSpiderAlt
 } from "react-icons/gi";
-import { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 import { AiOutlineContainer } from "react-icons/ai";
 import { BsFillFileEarmarkFontFill, BsFillArrowUpCircleFill } from "react-icons/bs";
@@ -31,8 +31,6 @@ const LinkButton = (props) => {
 }
 
 const Navbar = () => {
-  const location =useLocation();
-  const [ url, setLocation ] = useState("")
   const [ cookies ] = useCookies([
     "velocity", 
     "larvaeCount", 
@@ -42,6 +40,7 @@ const Navbar = () => {
     "startCount",
     "startTime",
   ]);
+  const [ active, setActive ] = useState("meat");
   const styles = {
     textformat: {
       textDecoration: "none",
@@ -50,12 +49,12 @@ const Navbar = () => {
     }
   };
 
-  useEffect (() => {
-    setLocation(location.pathname.replace('/',''))
-  }, [url])
-
   return (
-    <Nav variant="tabs" defaultActiveKey={url}>
+    <Nav 
+      variant="tabs" 
+      activeKey={active}
+      onSelect={(eventKey) => setActive(eventKey)}
+    >
       <Nav.Item>
         <Nav.Link 
           eventKey="meat"
