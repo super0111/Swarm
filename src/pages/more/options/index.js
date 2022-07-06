@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
-import { Container, Form, Dropdown, Card, Button } from "react-bootstrap"
+import { Container, Form, Dropdown, Card, Button, Modal } from "react-bootstrap"
 import { BsFillEyeFill, BsFilm, BsDownload } from "react-icons/bs";
 import { ImBarcode, ImImage } from "react-icons/im";
 import Clipboard from 'clipboard';
@@ -11,6 +11,26 @@ import User from "./user";
 import classes from "./options.module.css";
 
 new Clipboard('#data');
+
+const StartModal = (props) => {
+  const { show, handleClose } = props;
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>www.swarmsim.com says</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>You will lose everything and restart the game. No reset-bonuses here.<br></br> You sure?</Modal.Body>
+      <Modal.Footer>
+        <Button size="sm" variant="outline-primary" onClick={handleClose}>
+          OK
+        </Button>
+        <Button size="sm" variant="outline-danger" onClick={handleClose}>
+          Cancel
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
+}
 
 const Options = () => {
   const [ isShow, setIsShow ] = useState(false);
@@ -23,12 +43,23 @@ const Options = () => {
     "startCount",
     "startTime",
     "advanceUnit",
+    "numFormart",
+    "durationFormart",
+    "theme"
   ]);
+
   const [ isChecked, setChecked ] = useState(cookies.advanceUnit || false);
+  const [ selectedTheme, setSelectedTheme ] = useState(cookies.theme || false);
+  
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const data = "MS4xLjEz|Q2hlYXRlciA6KAoKN4IgrgdglgLjCeAHApgZxALlFCA3KqUARgDbIAWAhjAMbnIBO8mIAjCADQgC2y1LAZgCsnECUoNclFqwAMomgHsliiC3lcYjBrEVN1o5BEYBzZhhAaQDNChoBRYwzMGu3GAA9Hp85dHGPMHQLKxomVBhKElceMEiTIxjEG244ygS1ENFKVBojQlUYgDMbZAAlW2QaFgAWUQATBlVkGIBHMGRErK5jCJiTG2pGds7Mvy5yKFwW7pBJ6ZGu8ZBkbmS0YOXkxUR6GH7FevqNpMoIGHpC2cQzi+RVACZT88uIAWe71Trr29eRWcU0wY3Bw9RigMYIIg9SeAKBUPq7zhkNB32WEOBoP+6PhoIAbDFUAB3CTcEg4EyEmAUxiExBQY4MGLcRSodq6GIkZRBfazJqUOj9KC3VD0xkxPLnKAoY4xEmimLHXCKMA2JmzEyKK7LaAmcgwIhgSmzFkXGJEfgmtIvah0Ri+KypSLnC285ZO240LnGZnWmDE0kkhiIX3OmAMILkUO3PiCq1hkrIVrR84BIIpyLAh2iD3nXiWvwAXy49SGmFAEQkWjBFgesgeDwAtLI8Y2BLIACqsPEYGqsXs1AB0AA4+wAtUQ2SsMassOsN5ut9tdnt9gcj8eiVCUaY1kDzpsttud1jDjAPHtCViD1gATlkE64NigRSgyD3B8Xx5Xvf7NSHo6sI+IBeqy75zvWh5Lieq5/gBm7FiAOzUqowQVuQihEgAgvUUgQHk9QAKrQDAAAi1DSBgRRRKgyBcEUiCoFhcSKJg1EkLR9GMZgDwAOw9IokQoWMRgmDgnQ6BAlIlqq1BQKoABiejcAW5BgCpahcAQADCPKKNwHb0LwbE0XRIB3MZFh5BGZBnNkLGIJGJkccgiFgIgAyUMcaGIZW1IRFANBoSARDwMRsDlohoWER5DBeTMwCIV6gUANbBLIiECpMyDTLw5zBXQZwJFyxpXqwDxCDUiEkrQ9A1olXCoCl0oygAslAJDkulXBAgUmQVpms4WNeI3vI1O7gcNN43u8mV0G+uVGP6ADKGFEv1KwSMYNbhh0XCQHwDDbZgu1mSpTWTadXB6OKFjHNRYAkPsT45YwtEnRGrmFkAA";
   
   const handleSelect = (eventKey) => {
-    console.log("ssd", eventKey)
+    setSelectedTheme(eventKey);
   };
 
   const handleChange = () => {};
@@ -37,6 +68,14 @@ const Options = () => {
   };
   const handleVelocity = (e) => {
     setCookie("velocity", e.target.value, { path: '/' });
+  }
+
+  const handleNumFormat = (e) => {
+    setCookie("numFormart", e.target.value, { path: '/' });
+  }
+
+  const handleDuration = (e) => {
+    setCookie("durationFormart", e.target.value, { path: '/' });
   }
 
   const handleStart = () => {
@@ -78,6 +117,7 @@ const Options = () => {
       </div>
       <br></br>
       <p>Reduce this setting if the game is slowing down your computer. This doesn't affect gameplay; your units won't produce resources any faster or slower.</p>
+      
       <div className={classes.flex}>
         <ImBarcode />
         <strong style={{marginLeft: 5}}>Number format</strong>
@@ -85,25 +125,54 @@ const Options = () => {
       <div>
         <Form.Check.Input 
           type='radio' 
-          isValid 
+          isValid
+          value="standard"
+          checked={ cookies.numFormart === undefined ? cookies.numFormart === "standard" : cookies.numFormart === "standard"}
+          onChange={handleNumFormat}
         />
-        {' '}Standard decimal(legend){' '}
+        {' '}Standard decimal
+        (
+          <Link
+            className={classes.aTag}
+            to="/decimallegend"
+          >
+            legend
+          </Link>
+        )
+        {' '}
         <Form.Check.Input 
           type='radio' 
-          isValid 
+          isValid
+          value="scientic"
+          checked={cookies.numFormart === "scientic" }
+          onChange={handleNumFormat} 
         />
         {' '}Scientific-E{' '}
         <Form.Check.Input 
           type='radio' 
-          isValid 
+          isValid
+          value="hybrid"
+          checked={cookies.numFormart === "hybrid" }
+          onChange={handleNumFormat} 
         />
         {' '}Hybrid{' '}
         <Form.Check.Input 
           type='radio' 
-          isValid 
+          isValid
+          value="engineering"
+          checked={cookies.numFormart === "engineering" }
+          onChange={handleNumFormat} 
         />
         {' '}Engineering
-        <p>Examples: 123.456E6, 123E6, 123.456E36, 123E36</p>       
+        <p>Examples: 
+          { 
+            cookies.numFormart === "standard" ? "123.456 million, 123M, 123.456 undecillion, 123UDc"
+          : cookies.numFormart === "scientic" ? "1.23456e8, 1.23e8, 1.23456e38, 1.23e38"
+          : cookies.numFormart === "hybrid" ? "123.456 million, 123M, 1.23456e38, 1.23e38"
+          : cookies.numFormart === "engineering" ? "123.456E6, 123E6, 123.456E36, 123E36" 
+          : ""
+          }
+        </p>       
       </div>
       <div className={classes.flex}>
         <ImBarcode />
@@ -168,15 +237,37 @@ const Options = () => {
           }
         </p>
       </div>
+
       <div className={classes.flex}>
         <ImBarcode />
         <strong style={{marginLeft: 5}}>Duration format</strong>
       </div>
       <div>
-        <Form.Check.Input type='radio' isValid />{' '}Exact{' '}
-        <Form.Check.Input type='radio' isValid />{' '}Approximate{' '}
-        <p>Examples: 00:16, 2:43, 2:30:00, 23 days 7 hours, 2 months 7 days, 1 years 2 months</p>
+        <Form.Check.Input 
+          type='radio' 
+          isValid
+          value="exact"
+          checked={  cookies.durationFormart === undefined ? cookies.durationFormart === "exact" : cookies.durationFormart === "exact" }
+          onChange={handleDuration} 
+        />
+        {' '}Exact{' '}
+        <Form.Check.Input 
+          type='radio' 
+          isValid
+          value="approximate"
+          checked={cookies.durationFormart === "approximate"}
+          onChange={handleDuration} 
+        />
+        {' '}Approximate{' '}
+        <p>
+          { 
+            cookies.durationFormart === "exact" ? "00:16, 2:43, 2:30:00, 23 days 7 hours, 2 months 7 days, 1 years 2 months"
+          : cookies.durationFormart === "approximate" ? "a few seconds, 3 minutes, 3 hours, 23 days, 2 months, a year"
+          : ""
+          }
+        </p>
       </div>
+
       <Dropdown onSelect={handleSelect}>
         <Dropdown.Toggle 
           className={classes.toggle_btn} 
@@ -185,10 +276,27 @@ const Options = () => {
         >
           <ImImage />Theme<strong style={{color: "red"}}>(BETA)</strong>
         </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item eventKey='a' >Action</Dropdown.Item>
-          <Dropdown.Item eventKey='b' >Another action</Dropdown.Item>
-          <Dropdown.Item eventKey='c' >Something else</Dropdown.Item>
+        <Dropdown.Menu className={classes.dropdown}>
+          <Dropdown.Item eventKey='default' >Default White</Dropdown.Item>
+          <Dropdown.Item eventKey='cerulean' >Cerulean</Dropdown.Item>
+          <Dropdown.Item eventKey='cosmo' >Cosmo</Dropdown.Item>
+          <Dropdown.Item eventKey='cyborg' >Cyborg</Dropdown.Item>
+          <Dropdown.Item eventKey='darkly' >Darkly</Dropdown.Item>
+          <Dropdown.Item eventKey='flatly' >Flatly</Dropdown.Item>
+          <Dropdown.Item eventKey='journal' >Journal</Dropdown.Item>
+          <Dropdown.Item eventKey='lumen' >Lumen</Dropdown.Item>
+          <Dropdown.Item eventKey='paper' >Paper</Dropdown.Item>
+          <Dropdown.Item eventKey='readable' >Readable</Dropdown.Item>
+          <Dropdown.Item eventKey='sandstone' >Sandstone</Dropdown.Item>
+          <Dropdown.Item eventKey='simplex' >Simplex</Dropdown.Item>
+          <Dropdown.Item eventKey='slate' >Slate</Dropdown.Item>
+          <Dropdown.Item eventKey='spacelab' >Spacelab</Dropdown.Item>
+          <Dropdown.Item eventKey='superhero' >Superhero</Dropdown.Item>
+          <Dropdown.Item eventKey='united' >United</Dropdown.Item>
+          <Dropdown.Item eventKey='yeti' >Yeti</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item eventKey='custom' >Custom Style</Dropdown.Item>
+          <Dropdown.Item eventKey='additional' >Additional styling (advanced)</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
       <p>
@@ -198,7 +306,7 @@ const Options = () => {
           href="https://bootswatch.com/default/"
           target="_blannk"
         >
-          default white
+          {selectedTheme}
         </a>
       </p>
       <div className={classes.flex}>
@@ -249,7 +357,7 @@ const Options = () => {
       <Button
         variant="outline-secondary"
         className={classes.dataClear_btn}
-        onClick={handleStart}
+        onClick={handleShow}
       >
         <AiFillWarning size={18} />
         Wipe all saved data and start over 
@@ -257,6 +365,7 @@ const Options = () => {
       <p>
         You started playing {moment(cookies.startTime).fromNow()}.
       </p>
+      <StartModal show={show} handleClose={handleClose} />
       <div className={classes.flex}>
         <AiOutlineCloudUpload size={20}/>
         <strong style={{marginLeft: 5}}>Analytics</strong>

@@ -4,11 +4,12 @@ import { Col, Row, Button, Form } from "react-bootstrap";
 import { BsXLg } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import classes from "../meat.module.css"
-import { Context } from "../../../components/AppContext";
+import { Context } from "../../../context/AppContext";
 
 const DroneDetails = () => {
   const { droneCount, setDroneCount } = useContext(Context);
-
+  const { meatCount, setMeatCount } = useContext(Context);
+  const { larvaeCount, setLarvaeCount } = useContext(Context);
   const [ cookies, setCookie ] = useCookies([
     "velocity", 
     "larvaeCount", 
@@ -17,12 +18,9 @@ const DroneDetails = () => {
     "droneTime",
     "hatcheryCount",
     "droneClick",
-    "goodStart",
   ]);
   const [ droneStateValue, setDroneStateValue ] = useState(0);
   const [ droneClick, setDroneClick ] = useState(Number(cookies.droneClick) || 0);
-  const [ goodStart, setGoodStart ] = useState(false);
-
   const handleDroneChange = (e) => {
     setDroneStateValue(e.target.value);
   }
@@ -31,34 +29,16 @@ const DroneDetails = () => {
       const time = new Date();
       setCookie("droneTime", time ,{ path: '/' });
     }
-    setDroneClick(Number(cookies.droneClick)+1)
+    setDroneClick(Number(cookies.droneClick)+1);
     setCookie("droneClick", droneClick, {path: '/'});
-
     if(cookies.droneCount === undefined) {
       setDroneCount(0 + Number(droneStateValue));
     }
-
-    setDroneCount(Number(cookies.droneCount) + Number(i));
-    setCookie("meatCount", Number(cookies.meatCount)-Number(i*10) , { path: '/' });
-    setCookie("larvaeCount", Number(cookies.larvaeCount)-Number(i) , { path: '/' });
-
-    if(Number(cookies.droneCount) === 0 || cookies.droneCount === undefined) {
-      setGoodStart(true);
-    }
+    setDroneCount(prevCount => Number(prevCount) + Number(i));
+    setMeatCount(meatCount - Number(i*10));
+    // setCookie("larvaeCount", larvaeCount-i , { path: '/' });
   }
-
-  useEffect(() => {
-    setCookie("goodStart", goodStart, {path: '/'});
-  }, [goodStart])
   
-  useEffect(() => {
-    setCookie("droneClick", droneClick , { path: '/' });
-  }, [droneClick])
-
-  useEffect(() => {
-    setCookie("droneCount", droneCount , { path: '/' });
-  }, [droneCount])
-
   return (
     <div className={classes.droneDetails}>
       <Link 
@@ -68,7 +48,7 @@ const DroneDetails = () => {
         Drone
       </Link>
       <p>Drones are the lowest class of worker in your swarm. They continuously gather meat to feed your swarm.</p>
-      <p>You own {cookies.droneCount == 0 ? "no" : cookies.droneCount} drones.</p>
+      <p>You own {droneCount === 0 ? "no" : droneCount} drones.</p>
       <p>Each produces {' '}
         {
           cookies.velocity === "seconds" ? "1.00000"
@@ -112,23 +92,23 @@ const DroneDetails = () => {
         className={classes.hatch_btn}
         value={droneStateValue}
         onClick={ () => handleHatch( 
-          droneStateValue == "" ? 1 :
-          droneStateValue*10 < Number(cookies.meatCount) ? droneStateValue : 
-          Math.trunc(Number(cookies.meatCount)/10)
+          droneStateValue === 0 ? 1 :
+          droneStateValue*10 < meatCount ? droneStateValue : 
+          Math.trunc(meatCount/10)
         )}
       >
         Hatch 
-        { droneStateValue == "" ? 1 :
-          droneStateValue*10 < Number(cookies.meatCount) ? droneStateValue : 
-          Math.trunc(Number(cookies.meatCount)/10)
+        { droneStateValue === 0 ? 1 :
+          droneStateValue*10 < meatCount ? droneStateValue : 
+          Math.trunc(meatCount/10)
         }
       </Button>
       <Button
         variant="outline-secondary"
         className={classes.hatch_btn}
-        onClick={ () => handleHatch( Math.trunc(Number(cookies.meatCount)/10) )}
+        onClick={ () => handleHatch( Math.trunc(meatCount/10 ))}
       >
-        Hatch { Math.trunc(Number(cookies.meatCount)/10) }
+        Hatch { Math.trunc(meatCount/10) }
       </Button>
       <Link
         to="/meat"

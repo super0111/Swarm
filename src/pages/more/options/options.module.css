@@ -74,3 +74,16 @@
     color:  #1d4d77;
     text-decoration: underline;
 }
+.aTag {
+    font-size: 14px;
+    color: #337ab7 !important;
+    text-decoration: none;
+}
+.aTag:hover {
+    color: #337ab7!important;
+    text-decoration: underline;
+}
+.dropdown {
+    max-height: 200px;
+    overflow-y: scroll;
+}

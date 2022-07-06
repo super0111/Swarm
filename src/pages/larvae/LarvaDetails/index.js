@@ -4,9 +4,10 @@ import { Button, ProgressBar } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import { BsXLg } from "react-icons/bs";
 import classes from "../larvae.module.css"
-import { Context } from "../../../components/AppContext";
+import { Context } from "../../../context/AppContext";
 
 const LarvaDetails = () => {
+  const { meatCount, setMeatCount } = useContext(Context);
   const [ cookies, setCookie ] = useCookies([
     "velocity", 
     "larvaeCount", 
@@ -15,22 +16,36 @@ const LarvaDetails = () => {
     "hatcheryClick",
     "hatcheryTime",
   ]);
-  const HatPercentage = Math.trunc( Number(cookies.meatCount)/(300*Math.pow(10, Number(cookies.hatcheryClick)))*100);
-  const ExpPercentage = 0;
-
+  const [hatPercentage, setHatPercentage] = useState(0)
   const { hatcheryCount, setHatcheryCount } = useContext(Context);
   const [ hatcheryClick, setHatcheryClick ] = useState(Number(cookies.hatcheryClick) || 0);
+  const [ buttons, setButtons ] = useState([1]);
 
-  const handleHatchery = () => {
+  const ExpPercentage = 0;
+
+  useEffect(() => {
+    const _hatPercentage = Math.trunc( Number(cookies.meatCount)/(300*(Math.pow(10, (hatcheryClick))))*100);
+    setHatPercentage(_hatPercentage % 100);
+    if( _hatPercentage > 100 ) {
+      setHatcheryClick(hatcheryClick +1)
+      setButtons([...buttons, hatcheryClick + 1])
+    }
+  })
+
+  const handleHatchery = (i) => {
     if(Number(cookies.hatcheryClick) === 0) {
       const time = new Date();
       setCookie("hatcheryTime", time ,{ path: '/' });
     }
-
-    setHatcheryCount(Number(cookies.hatcheryCount) + 1);
-    setHatcheryClick(Number(cookies.hatcheryClick) + 1);
-    setCookie("meatCount", Number(cookies.meatCount)-300*Math.pow(10, Number(cookies.hatcheryClick)));
+    setHatcheryCount( prevCount => Number(prevCount) + 1);
+    setMeatCount(meatCount - 300*Math.pow(10, i));
+    setHatcheryClick(hatcheryClick + 1);
   }
+
+  useEffect(() => {
+    setCookie("meatCount", meatCount , { path: '/' });
+  }, [ meatCount ])
+
   useEffect(() => {
     setCookie("hatcheryCount", hatcheryCount , { path: '/' });
   }, [ hatcheryCount ])
@@ -38,6 +53,8 @@ const LarvaDetails = () => {
   useEffect(() => {
     setCookie("hatcheryClick", hatcheryClick , { path: '/' });
   }, [ hatcheryClick ])
+
+  console.log("hatcheryClick", hatcheryClick)
 
   return (
     <div className={classes.larvaDetails}>
@@ -82,24 +99,25 @@ const LarvaDetails = () => {
         : 900
         } 
         {' '}larvae per {cookies.velocity}.</p>
-      <p>Next upgrade costs {300*(Math.pow(10, Number(cookies.hatcheryCount)))} meat</p>
+      <p>Next upgrade costs {300*(Math.pow(10, hatcheryCount))} meat</p>
       <ProgressBar
         className={classes.progressBar}
-        now={HatPercentage} 
-        label={`${HatPercentage}% `}
+        now={hatPercentage} 
+        label={`${hatPercentage}% `}
         variant="custom"
         height={30}
       />
-      <Button
-        disabled={
-          cookies.hatcheryCount == 0 && cookies.meatCount > 300 ? false : true
-        }
-        variant="outline-secondary"
-        className={classes.disable_btn}
-        onClick={handleHatchery}
-      >
-        { cookies.meatCount < 300 ? "Can't buy" : "Buy 1" }
+        <Button
+          disabled={
+            meatCount > 300*(Math.pow(10, hatcheryCount)) ? false : true
+          }
+          variant="outline-secondary"
+          className={classes.disable_btn}
+          onClick={ () => handleHatchery()}
+        >
+        { cookies.meatCount < 300*(Math.pow(10, hatcheryCount)) ? "Can't buy" : "Buy" }
       </Button>
+      
       <p>Expansion (0) </p>
       <p>Each expansion increases your hatcheries' larvae production by 10%. Currently, your expansions increase hatchery production by 0%.</p>
       <p>Next upgrade costs 10 territory</p>

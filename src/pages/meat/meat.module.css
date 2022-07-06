@@ -67,6 +67,18 @@
     background-color: #dce2e8;
     color: black;
 }
+.queenHatch_btn {
+    width: 100%;
+}
+.upgradeHatch_btn {
+    width: 100%;
+}
+.disableHatch_btn {
+    width: 100%;
+    background: none !important;
+    color: #6a6c6d !important;
+    border: 1px solid #8d8d8d !important;
+}
 .close {
     position: absolute;
     top: 10px;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Container, Card, Nav } from 'react-bootstrap';
+import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import classes from './layout.module.css';
 import Viewwrap from './viewwrap';
@@ -50,12 +51,24 @@ const Layout = (props) => {
         </Card> : ""
       }
 
-      { Number(cookies.droneCount) > 0 ?
+      { Number(cookies.droneCount) < 0 || Number(cookies.meatCount) > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
+        "" :
         <Card className={classes.tutorial1}>
           <Card.Body>
             <Card.Text>
               You lead a small brood of worker drones. Drones gather meat. Use
               this meat to build more drones and expand your brood.
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      }
+
+      {
+        Number(cookies.meatCount) > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
+        <Card className={classes.tutorial1}>
+          <Card.Body>
+            <Card.Text>
+              A <BsFillArrowUpCircleFill color="#337ab7" /> appears when you have enough meat to upgrade your hatchery.
             </Card.Text>
           </Card.Body>
         </Card> : ""

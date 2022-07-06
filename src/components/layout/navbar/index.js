@@ -11,12 +11,14 @@ import {
 import {
   GiSpiderAlt
 } from "react-icons/gi";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 import { AiOutlineContainer } from "react-icons/ai";
 import { BsFillFileEarmarkFontFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { Nav, NavDropdown } from 'react-bootstrap';
+import { Context } from "../../../context/AppContext";
+import { func } from '../../../utils';
 
 const LinkButton = (props) => {
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const LinkButton = (props) => {
 }
 
 const Navbar = () => {
+  const { meatCount, larvaeCount } = useContext(Context);
   const [ cookies ] = useCookies([
     "velocity", 
     "larvaeCount", 
@@ -48,6 +51,10 @@ const Navbar = () => {
       marginLeft: 5,
     }
   };
+  const value = meatCount;
+  const newValue = func(value);
+  const larvaeValue =  cookies.larvaeCount;
+  const newLarvaeValue = func(larvaeValue);
 
   return (
     <Nav 
@@ -63,7 +70,7 @@ const Navbar = () => {
             to='/meat'
             style={{ color: '#337ab7', textDecoration: "none" }}
           >
-            { cookies.meatCount } meat
+            { newValue } meat
           </LinkButton>
         </Nav.Link>
       </Nav.Item>
@@ -75,8 +82,8 @@ const Navbar = () => {
             to='/larvae'
             style={{ color: "#337ab7", textDecoration: "none" }}
           >
-            { cookies.larvaeCount } {' '}larvae{' '}
-            { Number(cookies.meatCount) > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
+            {newLarvaeValue } {' '}larvae{' '}
+            { meatCount > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
               <BsFillArrowUpCircleFill size={12} color="#337ab7" /> : ""
             }
           </LinkButton>

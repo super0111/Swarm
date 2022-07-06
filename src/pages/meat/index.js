@@ -1,12 +1,16 @@
+import { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Col, Row, Card } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
 import classes from "./meat.module.css";
-import { useState } from "react";
+import { Context } from "../../context/AppContext";
+
+import { func } from '../../utils'
 
 const Meat = () => {
-  const [ cookies ] = useCookies([
+  const { queenCount, setQueenCount } = useContext(Context);
+  const [ cookies, setCookie ] = useCookies([
     "velocity", 
     "larvaeCount", 
     "meatCount", 
@@ -15,12 +19,22 @@ const Meat = () => {
   ]);
   const [ isShow, setIsShow ] = useState(true);
   const handleClose = () => {
-    console.log("click")
     setIsShow(true)
   }
+  const value = cookies.meatCount;
+  const newValue = func(value);
+
   return (
     <Row className={classes.height}>
       <Col md={3}>
+        { Number(cookies.droneCount) >= 10 || queenCount > 0 ? 
+            <Link className={classes.drone} to="/meat/queen">
+              <div className={classes.drone_name}>Queen</div>
+              <div className={classes.drone_value}>
+                {cookies.queenCount === undefined ? 0 : cookies.queenCount}
+              </div>
+          </Link> : ""
+        }
         <Link className={classes.drone} to="/meat/drone">
           <div className={classes.drone_name}>Drone</div>
           <div className={classes.drone_value}>
@@ -29,7 +43,7 @@ const Meat = () => {
         </Link>
         <Link className={classes.meat} to="/meat/meat">
           <div className={classes.drone_name}>Meat</div>
-          <div className={classes.drone_value}>{cookies.meatCount}</div>
+          <div className={classes.drone_value}>{newValue}</div>
         </Link>
       </Col>
       <Col md={9}>
