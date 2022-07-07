@@ -20,17 +20,22 @@ const [ meatCount, setMeatCount ] = useState(Number(cookies.meatCount) || 35);
 const [ droneCount, setDroneCount ] = useState(Number(cookies.droneCount) || 0);
 const [ droneClick, setDroneClick ] = useState(Number(cookies.droneClick) || 0);
 const [ droneTime, setDroneTime ] = useState(Number(cookies.droneTime) || undefined);
+const [ fasterDronesCounter, setFasterDrones ] = useState(Number(cookies.fasterDronesCounter || 0));
+const [ twinDronesCounter, setTwinDrones ] = useState(Number(cookies.twinDronesCounter || 0));
 const [ queenCount, setQueenCount ] = useState(Number(cookies.queenCount) || 0);
-const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 0);
+const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 1);
 const [ startCount, setStartCount ]= useState(Number(cookies.startCount) || 0);
 const [ currentUser, setCurrentUser ] = useState("");
 
 useInterval(() => {
   setMeatCount((prevCounter) => {
-    return prevCounter + droneCount
+    return prevCounter + droneCount;
   });
   setDroneCount((prevCounter) => {
-    return prevCounter + queenCount
+    return prevCounter + queenCount;
+  });
+  setLarvaeNum((prevCounter) => {
+    return prevCounter + hatcheryCount;
   });
 }, 1000)
 
@@ -43,32 +48,18 @@ useEffect(() => {
   }
 }, [startCount])
 
-  /******** LarvaeCount **********/
-  const updateLarvaeCookie = () => {
-    setCookie("larvaeCount", larvaeNum , { path: '/' });
-  }
-
-  const increaseLarvae = () => {
-    setTimeout(() => {
-      setLarvaeNum(larvaeNum + 1 + hatcheryCount);
-    }, 1000)
-  }
-  useEffect(() => {
-    increaseLarvae();
-    updateLarvaeCookie();
-  }, [larvaeNum])
-
-
-
   return (
     <Context.Provider 
       value={{
         droneCount, setDroneCount,
+        meatCount, setMeatCount,
+        larvaeNum, setLarvaeNum,
         droneClick, setDroneClick,
         droneTime, setDroneTime,
+        fasterDronesCounter, setFasterDrones,
+        twinDronesCounter, setTwinDrones,
         queenCount, setQueenCount,
         hatcheryCount, setHatcheryCount,
-        meatCount, setMeatCount,
         currentUser, setCurrentUser,
       }}
     >

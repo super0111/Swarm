@@ -7,7 +7,16 @@ import classes from "../meat.module.css";
 import { Context } from "../../../context/AppContext";
 
 const DroneDetails = () => {
-  const { queenCount, setQueenCount, meatCount, setMeatCount,  droneCount, setDroneCount } = useContext(Context);
+  const { 
+    meatCount, 
+    setMeatCount, 
+    droneCount, 
+    setDroneCount,
+    larvaeNum,
+    setLarvaeNum,
+    queenCount, 
+    setQueenCount, 
+  } = useContext(Context);
   const [ queenStateValue, setQueenStateValue ] = useState(0);
 
   const [ cookies ] = useCookies([
@@ -29,6 +38,7 @@ const DroneDetails = () => {
     setQueenCount(prevCount => Number(prevCount) + Number(queenStateValue))
     setMeatCount(meatCount - Number(queenStateValue*810));
     setDroneCount(droneCount - Number(queenStateValue*100));
+    setLarvaeNum(larvaeNum - Number(queenStateValue));
   }
 
   return (

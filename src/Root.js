@@ -28,7 +28,10 @@ export const Root = () => {
   const { 
     meatCount, 
     droneCount, 
+    larvaeNum,
     droneClick,
+    fasterDronesCounter,
+    twinDronesCounter,
     queenCount,
     hatcheryCount, 
     hatcheryClick, 
@@ -37,7 +40,10 @@ export const Root = () => {
     "velocity", 
     "meatCount", 
     "droneCount",
+    "larvaeCount",
     "droneClick",
+    "fasterDronesCounter",
+    "twinDronesCounter",
     "queenCount",
     "hatcheryCount",
     "hatcheryClick",
@@ -53,10 +59,21 @@ export const Root = () => {
   }, [droneCount])
 
   useEffect(() => {
+    setCookie("larvaeCount", larvaeNum , { path: '/' });
+  }, [larvaeNum])
+
+  useEffect(() => {
     setCookie("droneClick", droneClick , { path: '/' });
   }, [droneClick])
 
-    
+  useEffect(() => {
+    setCookie("fasterDronesCounter", fasterDronesCounter , { path: '/' });
+  }, [fasterDronesCounter])
+
+  useEffect(() => {
+    setCookie("twinDronesCounter", twinDronesCounter , { path: '/' });
+  }, [twinDronesCounter])
+
   useEffect(() => {
     setCookie("queenCount", queenCount , { path: '/' });
   }, [queenCount])
@@ -74,9 +91,6 @@ export const Root = () => {
     setCookie("velocity", "seconds", { path: '/' });
   }, [cookies.velocity === undefined])
 
-  // useEffect(() => {
-  //   setCookie("hatcheryCount", 0, {path: "/"})
-  // }, [])
   useEffect (() => {
     setCookie("numFormart", "standard", { path: '/' });
   }, [cookies.numFormart === undefined])

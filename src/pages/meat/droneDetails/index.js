@@ -1,14 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Col, Row, Button, Form } from "react-bootstrap";
 import { BsXLg } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import classes from "../meat.module.css"
+import TwinDrones from "./twinDrones";
+import FasterDrones from "./fasterDrones";
 import { Context } from "../../../context/AppContext";
 
 const DroneDetails = () => {
-  const { droneCount, setDroneCount, droneClick, setDroneClick, droneTime, setDroneTime } = useContext(Context);
-  const { meatCount, setMeatCount } = useContext(Context);
+  const {
+    droneCount, setDroneCount,
+    meatCount, setMeatCount,
+    larvaeNum,  setLarvaeNum, 
+    droneClick, setDroneClick,
+    queenCount,
+    fasterDronesCounter,
+    twinDronesCounter,
+  } = useContext(Context);
   const [ droneStateValue, setDroneStateValue ] = useState(0);
   const [ cookies, setCookie ] = useCookies([
     "velocity", 
@@ -19,14 +28,18 @@ const DroneDetails = () => {
     "droneClick",
     "hatcheryCount",
   ]);
+
   const handleDroneChange = (e) => {
     setDroneStateValue(e.target.value);
   }
 
   const handleHatch = (i) => {
+    if(larvaeNum < i) {
+      alert("You do't have enough larvae");
+      return;
+    }
     if(cookies.droneTime === undefined) {
       const time = new Date();
-      // setDroneTime(time);
       setCookie("droneTime", time, {path: "/"});
     }
     setDroneClick(droneClick+1);
@@ -35,9 +48,12 @@ const DroneDetails = () => {
     }
     setDroneCount(prevCount => Number(prevCount) + Number(i));
     setMeatCount(meatCount - Number(i*10));
-    // setCookie("larvaeCount", larvaeCount-i , { path: '/' });
+    setLarvaeNum(larvaeNum - Number(i));
   }
   
+
+  console.log("+++++++++++++++++++++", twinDronesCounter)
+  console.log("queenCount", queenCount)
   return (
     <div className={classes.droneDetails}>
       <Link 
@@ -86,35 +102,52 @@ const DroneDetails = () => {
           drone will cost {droneStateValue*10} meat and {droneStateValue} larva.
         </Form.Label>
       </Form.Group>
-      <Button
-        variant="outline-secondary"
-        className={classes.hatch_btn}
-        value={droneStateValue}
-        onClick={ () => handleHatch( 
-          droneStateValue === 0 ? 1 :
-          droneStateValue*10 < meatCount ? droneStateValue : 
-          Math.trunc(meatCount/10)
-        )}
-      >
-        Hatch 
-        { droneStateValue === 0 ? 1 :
-          droneStateValue*10 < meatCount ? droneStateValue : 
-          Math.trunc(meatCount/10)
-        }
-      </Button>
-      <Button
-        variant="outline-secondary"
-        className={classes.hatch_btn}
-        onClick={ () => handleHatch( Math.trunc(meatCount/10 ))}
-      >
-        Hatch { Math.trunc(meatCount/10) }
-      </Button>
+      { larvaeNum < droneStateValue || meatCount < 10*droneStateValue ?
+        <Button
+          disabled
+          className={classes.disableHatch_btn}
+        >
+          Can't Hatch
+        </Button> :
+        <>
+          <Button
+            variant="outline-secondary"
+            className={classes.hatch_btn}
+            value={droneStateValue}
+            onClick={ () => handleHatch( 
+              droneStateValue === 0 ? 1 :
+              droneStateValue*10 < meatCount ? droneStateValue : 
+              Math.trunc(meatCount/10)
+            )}
+          >
+            Hatch 
+            { droneStateValue === 0 ? 1 :
+              droneStateValue*10 < meatCount ? droneStateValue : 
+              Math.trunc(meatCount/10)
+            }
+          </Button>
+          <Button
+            variant="outline-secondary"
+            className={classes.hatch_btn}
+            onClick={ () => handleHatch( Math.trunc(meatCount/10 ))}
+          >
+            Hatch { Math.trunc(meatCount/10) }
+          </Button>
+        </>
+      }
       <Link
         to="/meat"
         className={classes.close}
       >
         <BsXLg className={classes.close_btn} />
       </Link>
+      { 
+        droneCount > 66 || fasterDronesCounter > 0 || twinDronesCounter > 0 ? 
+        <FasterDrones />: ""
+      }
+      {
+       twinDronesCounter > 0 || queenCount > 0 ? <TwinDrones /> : ""
+      }
     </div>
   )
 }

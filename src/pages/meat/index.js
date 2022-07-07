@@ -9,8 +9,8 @@ import { Context } from "../../context/AppContext";
 import { func } from '../../utils'
 
 const Meat = () => {
-  const { queenCount, setQueenCount } = useContext(Context);
-  const [ cookies, setCookie ] = useCookies([
+  const { queenCount, setQueenCount, fasterDrones } = useContext(Context);
+  const [ cookies ] = useCookies([
     "velocity", 
     "larvaeCount", 
     "meatCount", 
@@ -27,7 +27,7 @@ const Meat = () => {
   return (
     <Row className={classes.height}>
       <Col md={3}>
-        { Number(cookies.droneCount) >= 10 || queenCount > 0 ? 
+        { Number(cookies.droneCount) >= 10 || queenCount > 0 || fasterDrones > 0 ? 
             <Link className={classes.drone} to="/meat/queen">
               <div className={classes.drone_name}>Queen</div>
               <div className={classes.drone_value}>
