@@ -1,0 +1,113 @@
+.height {
+    height: 350px;
+}
+.meat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    cursor: pointer;
+    width: 200px;
+    text-decoration: none;
+}
+.meat:hover {
+    background-color:#f5f5f5;
+}
+.drone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    cursor: pointer;
+    width: 200px;
+    text-decoration: none;
+}
+.drone:hover {
+    background-color:#f5f5f5;
+}
+.drone_name {
+    width: 45px;
+    font-size: 16px;
+    color: #337ab7;
+}
+.drone_name:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: #23659e;
+}
+.drone_value {
+    font-size: 16px;
+    width: 30px;
+}
+.top_btn {
+    font-size: 28px;
+    font-weight: 500;
+    color: #337ab7;
+    margin-top: 30px;
+    text-decoration: none;
+}
+.top_btn:hover {
+    color: #337ab7;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.droneDetails, .meatDetails {
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 50px;
+}
+.divider {
+    border-bottom: 1px solid rgb(230 230 230);
+    margin: 10px 0 20px 0;
+}
+.hatch_btn {
+    width: 50%;
+}
+.hatch_btn:hover {
+    background-color: #dce2e8;
+    color: black;
+}
+.queenHatch_btn {
+    width: 100%;
+}
+.upgradeHatch_btn {
+    width: 100%;
+}
+.disableHatch_btn {
+    width: 100%;
+    background: none !important;
+    color: #6a6c6d !important;
+    border: 1px solid #8d8d8d !important;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.close_btn {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5d7488;
+    cursor: pointer;
+}
+.cardItem {
+    background-color:#dff0d8 !important;
+    margin: 20px 0;
+    margin-top: -50px!important;
+}
+.body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.notify_close_btn {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+.disable_btn {
+    width: 100%;
+}

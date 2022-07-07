@@ -1,0 +1,63 @@
+.height {
+    height: 350px;
+}
+.larva {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 280px;
+    padding: 9px 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.larva:hover {
+    background-color:#f5f5f5;
+}
+.larvaDetails {
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 50px;
+}
+.larva_name {
+    font-size: 17px;
+    color: #337ab7;
+    text-decoration: none;
+}
+.larva_name:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: #23659e;
+}
+.larva_value {
+    color: #333;
+    font-size: 17px;
+}
+.arvaDetails {
+    position: relative;;
+}
+.disable_btn {
+    width: 100%;
+}
+.top_btn {
+    font-size: 28px;
+    font-weight: 500;
+    color: #337ab7;
+    margin-top: 20px;
+    text-decoration: none;
+}
+.top_btn:hover {
+    color: #337ab7;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.close_btn {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5d7488;
+    cursor: pointer;
+}
