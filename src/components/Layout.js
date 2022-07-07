@@ -9,7 +9,6 @@ import Navbar from "./layout/navbar";
 
 const Layout = (props) => {
   const [ cookies ] = useCookies([
-    "velocity", 
     "larvaeCount", 
     "meatCount", 
     "droneCount",

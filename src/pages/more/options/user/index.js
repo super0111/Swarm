@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, Button } from "react-bootstrap";
 import Login from "./login";
 import Signin from "./signin";
 import ForgotPassword from "./forgotPassword";
 import classes from "./user.module.css";
 
 const User = () => {
-  const [ loginType, setLoginType ] = useState("login")
+  const [ loginType, setLoginType ] = useState("login");
+  const [ showLogout, setShowLogout ] = useState(false);
+
   const handleSelect = (eventKey) => {
       setLoginType(eventKey)
   };
@@ -43,10 +45,24 @@ const User = () => {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      { loginType === "login" ?
-        <Login setLoginType = { setLoginType } /> :
-        loginType === "signin" ?
-        <Signin/> : <ForgotPassword />
+      { 
+        showLogout === true ? 
+        <div className="m-2">
+          Hello sven@mail.com! 
+          <Button 
+            variant="outline-secondary"
+            onClick={() => setShowLogout(false)}
+          >
+            Logout
+          </Button>
+        </div> :
+        showLogout === false && loginType === "login" ?
+        <Login 
+          setLoginType = { setLoginType } 
+          setShowLogout = {setShowLogout}
+        /> :
+        showLogout === false && loginType === "signin" ?
+        <Signin setShowLogout = {setShowLogout}/> : <ForgotPassword />
       }
     </>
     

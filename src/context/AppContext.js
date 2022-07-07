@@ -22,6 +22,7 @@ const [ queenCount, setQueenCount ] = useState(Number(cookies.queenCount) || 0);
 const [ larvaeCount, setLarvaeCount ] = useState(Number(cookies.larvaeCount) || 0);
 const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 0);
 const [ startCount, setStartCount ]= useState(Number(cookies.startCount) || 0);
+const [ currentUser, setCurrentUser ] = useState("");
 
 useInterval(() => {
   setMeatCount((prevCounter) => {
@@ -97,6 +98,7 @@ useEffect(() => {
       larvaeCount, setLarvaeCount,
       hatcheryCount, setHatcheryCount,
       meatCount, setMeatCount,
+      currentUser, setCurrentUser,
     }}
     >
       {children}
