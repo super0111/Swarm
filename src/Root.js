@@ -1,4 +1,5 @@
 import React from "react";
+import { useCookies } from "react-cookie";
 import { 
   BrowserRouter,
   Routes,
@@ -21,15 +22,23 @@ import CrystalDetails from "./pages/more/all/crystal";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useContext } from 'react'
 import { Context } from './context/AppContext'
-import { useCookies } from "react-cookie";
 
 export const Root = () => {
 
-  const { meatCount, droneCount, droneClick, hatcheryCount, hatcheryClick } = useContext(Context)
+  const { 
+    meatCount, 
+    droneCount, 
+    droneClick,
+    queenCount,
+    hatcheryCount, 
+    hatcheryClick, 
+  } = useContext(Context)
   const [ cookies, setCookie ] = useCookies([
     "velocity", 
-    "larvaeCount", 
     "meatCount", 
+    "droneCount",
+    "droneClick",
+    "queenCount",
     "hatcheryCount",
     "hatcheryClick",
     "hatcheryTime",
@@ -47,6 +56,11 @@ export const Root = () => {
     setCookie("droneClick", droneClick , { path: '/' });
   }, [droneClick])
 
+    
+  useEffect(() => {
+    setCookie("queenCount", queenCount , { path: '/' });
+  }, [queenCount])
+
   useEffect(() => {
     setCookie("hatcheryCount", hatcheryCount , { path: '/' });
   }, [ hatcheryCount ])
@@ -54,6 +68,25 @@ export const Root = () => {
   useEffect(() => {
     setCookie("hatcheryClick", hatcheryClick , { path: '/' });
   }, [ hatcheryClick ])
+
+  /************* Initial **************/
+  useEffect (() => {
+    setCookie("velocity", "seconds", { path: '/' });
+  }, [cookies.velocity === undefined])
+
+  // useEffect(() => {
+  //   setCookie("hatcheryCount", 0, {path: "/"})
+  // }, [])
+  useEffect (() => {
+    setCookie("numFormart", "standard", { path: '/' });
+  }, [cookies.numFormart === undefined])
+  useEffect (() => {  
+    setCookie("durationFormart", "exact", { path: '/' });
+  }, [cookies.durationFormart === undefined])
+  useEffect (() => {  
+    setCookie("theme", "default", { path: '/' });
+  }, [cookies.theme === undefined])
+
 
   return (
     <BrowserRouter>

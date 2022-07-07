@@ -1,21 +1,16 @@
+import { useContext } from "react";
 import { useCookies } from "react-cookie";
 import { Container, Table } from "react-bootstrap";
 import moment from 'moment';
 import classes from "./statistics.module.css";
+import { Context } from "../../../context/AppContext";
 
 const Statistics = () => {
   const [ cookies ] = useCookies([
-    "velocity",
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount", 
-    "hatcheryCount", 
-    "droneTime",
-    "droneClick",
-    "hatcheryTime",
     "hatcheryClick",
     "startTime",
   ]);
+  const { droneCount, droneClick, droneTime } = useContext(Context);
 
   return (
     <Container>
@@ -44,9 +39,9 @@ const Statistics = () => {
           <tr className={classes.divider1}>
             <td>Drone</td>
             <td>{ cookies.droneTime ? moment(cookies.droneTime).format('hh:mm:ss') : ""}</td>
-            <td>{cookies.droneClick}</td>
-            <td>{cookies.droneCount}</td>
-            <td>{cookies.droneCount}</td>
+            <td>{droneClick}</td>
+            <td>{droneCount}</td>
+            <td>{droneCount}</td>
           </tr>
         </tbody>
       </Table>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Col, Row, Button, Form } from "react-bootstrap";
 import { BsXLg } from "react-icons/bs";
@@ -7,50 +7,29 @@ import classes from "../meat.module.css";
 import { Context } from "../../../context/AppContext";
 
 const DroneDetails = () => {
-  const { queenCount, setQueenCount } = useContext(Context);
-  const { meatCount, setMeatCount } = useContext(Context);
-  const { droneCount, setDroneCount } = useContext(Context);
-  const { larvaeCount, setLarvaeCount } = useContext(Context);
-
-  const [ cookies, setCookie ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount",
-    "queenCount",
-    "droneTime",
-    "hatcheryCount",
-    "droneClick",
-  ]);
-
+  const { queenCount, setQueenCount, meatCount, setMeatCount,  droneCount, setDroneCount } = useContext(Context);
   const [ queenStateValue, setQueenStateValue ] = useState(0);
+
+  const [ cookies ] = useCookies([
+    "velocity", 
+  ]);
 
   const handleQueenChange = (e) => {
     setQueenStateValue(e.target.value);
   }
 
   const handleHatch = () => {
-    if(cookies.queenCount === undefined) {
+    if(queenStateValue === 0) {
+      alert("Please input number"); 
+      return;
+    }
+    if(queenCount === undefined) {
       setQueenCount(0 + Number(queenStateValue));
     }
-
     setQueenCount(prevCount => Number(prevCount) + Number(queenStateValue))
     setMeatCount(meatCount - Number(queenStateValue*810));
     setDroneCount(droneCount - Number(queenStateValue*100));
-    setLarvaeCount((larvaeCount - Number(queenStateValue)));
   }
-
-  useEffect(() => {
-    setCookie("droneCount", droneCount , { path: '/' });
-  }, [droneCount])
-
-  useEffect(() => {
-    setCookie("meatCount", meatCount , { path: '/' });
-  }, [ meatCount ])
-  
-  useEffect(() => {
-    setCookie("queenCount", queenCount , { path: '/' });
-  }, [queenCount])
 
   return (
     <div className={classes.droneDetails}>
@@ -61,7 +40,7 @@ const DroneDetails = () => {
         Queen
       </Link>
       <p>Queens rule over your swarm's workers.</p>
-      <p>You own {Number(cookies.queenCount) === 0 ? "no" : cookies.queenCount} queens.</p>
+      <p>You own {queenCount === 0 ? "no" : queenCount} queens.</p>
       <p>Each produces {' '}
         {
           cookies.velocity === "seconds" ? "1.00000"
@@ -90,7 +69,7 @@ const DroneDetails = () => {
         </Form.Label>
       </Form.Group>
       {
-        Number(cookies.droneCount) < 100 ?
+        (droneCount < (100*queenStateValue) || meatCount < (810*queenStateValue)) ?
         <Button
           disabled
           className={classes.disableHatch_btn}

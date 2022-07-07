@@ -7,31 +7,30 @@ import classes from "../meat.module.css"
 import { Context } from "../../../context/AppContext";
 
 const DroneDetails = () => {
-  const { droneCount, setDroneCount } = useContext(Context);
+  const { droneCount, setDroneCount, droneClick, setDroneClick, droneTime, setDroneTime } = useContext(Context);
   const { meatCount, setMeatCount } = useContext(Context);
-  const { larvaeCount, setLarvaeCount } = useContext(Context);
+  const [ droneStateValue, setDroneStateValue ] = useState(0);
   const [ cookies, setCookie ] = useCookies([
     "velocity", 
     "larvaeCount", 
     "meatCount", 
     "droneCount",
     "droneTime",
-    "hatcheryCount",
     "droneClick",
+    "hatcheryCount",
   ]);
-  const [ droneStateValue, setDroneStateValue ] = useState(0);
-  const [ droneClick, setDroneClick ] = useState(Number(cookies.droneClick) || 0);
   const handleDroneChange = (e) => {
     setDroneStateValue(e.target.value);
   }
+
   const handleHatch = (i) => {
-    if(Number(cookies.droneClick) === 0) {
+    if(cookies.droneTime === undefined) {
       const time = new Date();
-      setCookie("droneTime", time ,{ path: '/' });
+      // setDroneTime(time);
+      setCookie("droneTime", time, {path: "/"});
     }
-    setDroneClick(Number(cookies.droneClick)+1);
-    setCookie("droneClick", droneClick, {path: '/'});
-    if(cookies.droneCount === undefined) {
+    setDroneClick(droneClick+1);
+    if(droneCount === undefined) {
       setDroneCount(0 + Number(droneStateValue));
     }
     setDroneCount(prevCount => Number(prevCount) + Number(i));
