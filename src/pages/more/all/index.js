@@ -1,5 +1,6 @@
 import { useCookies } from "react-cookie";
 import { Row, Col } from "react-bootstrap";
+import { BsCheckLg, BsXLg, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { Link, Outlet } from "react-router-dom";
 import classes from "./all.module.css";
 import { useContext } from "react";
@@ -10,16 +11,12 @@ const All = () => {
     meatCount,
     droneCount,
     larvaeNum,
+    queenCount, 
+    twinDronesCounter,
+    fasterDronesCounter, 
     velocity,
     hatcheryCount,
   } = useContext(Context)
-  const [ cookies ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount", 
-    "hatcheryCount"
-  ]);
 
   return (
     <Row className={classes.height}>
@@ -38,6 +35,9 @@ const All = () => {
           </div>
         </Link>
         <Link className={classes.meat} to="larva">
+          { meatCount > 300*(Math.pow(10, hatcheryCount)) ?
+            <BsFillArrowUpCircleFill color="#337ab7" /> : "" 
+          }
           <div className={classes.drone_name}>Larva</div>
           <div className={classes.drone_value}>{larvaeNum}</div>
           <div className={classes.drone_value}>
@@ -55,6 +55,9 @@ const All = () => {
           <div className={classes.drone_value}>0</div>
         </Link>
         <Link className={classes.meat} to="drone">
+          { queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
+            <BsFillArrowUpCircleFill size={16} color="#337ab7" /> : ""
+          }
           <div className={classes.drone_name}>Drone</div>
           <div className={classes.drone_value}>{droneCount === undefined  ? 0 : droneCount}</div>
         </Link>

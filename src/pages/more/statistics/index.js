@@ -66,7 +66,7 @@ const Statistics = () => {
       </Table>
       <div>
         {
-          hatcheryClick > 0 ?
+          hatcheryClick > 0 || fasterDronesCounter > 0 || twinDronesCounter > 0 ?
           <Table responsive>
             <thead>
               <tr className={classes.divider2}>
@@ -77,13 +77,13 @@ const Statistics = () => {
               </tr>
             </thead>
             <tbody>
-              { cookies.hatcheryTime == "undefined" ? "" :
+              { hatcheryClick > 0 ?
                 <tr className={classes.divider1}>
                   <td>Hatchery</td>
                   <td>{ cookies.hatcheryTime ? moment(cookies.hatcheryTime).format('hh:mm:ss') : ""}</td>
                   <td>{ hatcheryClick }</td>
                   <td>{ hatcheryClick }</td>
-                </tr >
+                </tr > : ""
               }
               { fasterDronesCounter > 0 ?
                 <tr className={classes.divider1}>
