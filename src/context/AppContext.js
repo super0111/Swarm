@@ -6,15 +6,13 @@ const Context = createContext();
 
 const AppProvider = ({children}) => {
 const [ cookies, setCookie ] = useCookies([
-  "velocity",
-  "larvaeCount",
-  "meatCount",
-  "droneCount",
-  "hatcheryCount",
   "startCount",
   "startTime",
 ]);
 
+const [ velocity, setVelocity ] = useState(Number(cookies.velocity) || "seconds");
+const [ numFormart, setNumFormart ] = useState(Number(cookies.numFormart) || "standard");
+const [ durationFormart, setDurationFormart ] = useState(Number(cookies.durationFormart) || "exact");
 const [ larvaeNum, setLarvaeNum ] = useState(Number(cookies.larvaeCount) || 10);
 const [ meatCount, setMeatCount ] = useState(Number(cookies.meatCount) || 35);
 const [ droneCount, setDroneCount ] = useState(Number(cookies.droneCount) || 0);
@@ -23,9 +21,13 @@ const [ droneTime, setDroneTime ] = useState(Number(cookies.droneTime) || undefi
 const [ fasterDronesCounter, setFasterDrones ] = useState(Number(cookies.fasterDronesCounter || 0));
 const [ twinDronesCounter, setTwinDrones ] = useState(Number(cookies.twinDronesCounter || 0));
 const [ queenCount, setQueenCount ] = useState(Number(cookies.queenCount) || 0);
-const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 1);
+const [ queenClick, setQueenClick ] = useState(Number(cookies.queenClick) || 0);
+const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 0 );
+const [ hatcheryClick, setHatcheryClick ] = useState(Number(cookies.hatcheryClick) || 0);
+const [ hatcheryTime, setHatcheryTime ]= useState(Number(cookies.hatcheryTime) || undefined );
 const [ startCount, setStartCount ]= useState(Number(cookies.startCount) || 0);
 const [ currentUser, setCurrentUser ] = useState("");
+const [ selectedTheme, setSelectedTheme ] = useState(cookies.theme || false);
 
 useInterval(() => {
   setMeatCount((prevCounter) => {
@@ -35,22 +37,23 @@ useInterval(() => {
     return prevCounter + queenCount;
   });
   setLarvaeNum((prevCounter) => {
-    return prevCounter + hatcheryCount;
+    return prevCounter + (hatcheryCount+1);
   });
 }, 1000)
 
 /******** Frist Render Time *********/
 useEffect(() => {
-  if(Number(cookies.startCount) === 0) {
+  if(cookies.startCount === undefined) {
     setStartCount(startCount + 1);
     const startTime = new Date();
     setCookie("startTime", startTime, { path: '/' });
   }
-}, [startCount])
+}, [])
 
   return (
     <Context.Provider 
       value={{
+        startCount, setStartCount,
         droneCount, setDroneCount,
         meatCount, setMeatCount,
         larvaeNum, setLarvaeNum,
@@ -59,8 +62,15 @@ useEffect(() => {
         fasterDronesCounter, setFasterDrones,
         twinDronesCounter, setTwinDrones,
         queenCount, setQueenCount,
+        queenClick, setQueenClick,
         hatcheryCount, setHatcheryCount,
         currentUser, setCurrentUser,
+        hatcheryClick, setHatcheryClick,
+        hatcheryTime, setHatcheryTime,
+        velocity, setVelocity,
+        numFormart, setNumFormart,
+        durationFormart, setDurationFormart,
+        selectedTheme, setSelectedTheme,
       }}
     >
       {children}

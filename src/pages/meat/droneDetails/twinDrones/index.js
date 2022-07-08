@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import classes from "../../meat.module.css";
 import { Button, ProgressBar } from "react-bootstrap"
 import { Context } from "../../../../context/AppContext";
@@ -8,6 +9,8 @@ const TwinDrones = () => {
     queenCount, setQueenCount,
     twinDronesCounter, setTwinDrones, 
   } = useContext(Context);
+  const [ cookies, setCookie ] = useCookies([ "twinDronesTime" ]);
+
   const [hatPercentage, setHatPercentage] = useState(0);
 
   useEffect(() => {
@@ -16,6 +19,12 @@ const TwinDrones = () => {
   }, [queenCount])
 
   const handleTwinDrones = () => {
+
+    if(cookies.twinDronesTime === undefined) {
+      const time = new Date();
+      setCookie("twinDronesTime", time, {path: "/"});
+    }
+
     setTwinDrones( twinDronesCounter + 1 );
     setQueenCount( queenCount - Math.pow(10, twinDronesCounter));
   }

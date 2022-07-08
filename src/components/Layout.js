@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
+import React, { useContext, useState } from 'react';
 import { Container, Card, Nav } from 'react-bootstrap';
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import classes from './layout.module.css';
 import Viewwrap from './viewwrap';
 import Navbar from "./layout/navbar";
+import { Context } from '../context/AppContext';
 
 const Layout = (props) => {
-  const [ cookies ] = useCookies([
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount",
-    "hatcheryCount",
-    "startCount",
-    "startTime",
-  ]);
+  const { 
+    droneCount,
+    meatCount,
+    hatcheryCount } = useContext(Context);
   const [ close, setClose ] = useState(false);
   
   return (
@@ -37,20 +33,20 @@ const Layout = (props) => {
         </Card.Body>
       </Card>
       { 
-        Number(cookies.droneCount) === 0 || cookies.droneCount === undefined ?
-        <Card className={classes.tutorial}>
-          <Card.Body>
-            <Card.Text>
-              Welcome to Swarm Simulator. Starting with just a few larvae and a small pile of meat, grow a massive swarm of giant bugs.
-              <br></br><br></br>
-              Your brood starts its life with a small pile of meat and a single larva-producing hatchery. Larvae mutate into other units. Begin your growth by using your meat and larvae to hatch some 
-              <Link to="/meat/drone" className={classes.toDrone}>{" "}drones</Link>.
-            </Card.Text>
-          </Card.Body>
-        </Card> : ""
+        droneCount === 0 || droneCount === undefined ?
+          <Card className={classes.tutorial}>
+            <Card.Body>
+              <Card.Text>
+                Welcome to Swarm Simulator. Starting with just a few larvae and a small pile of meat, grow a massive swarm of giant bugs.
+                <br></br><br></br>
+                Your brood starts its life with a small pile of meat and a single larva-producing hatchery. Larvae mutate into other units. Begin your growth by using your meat and larvae to hatch some 
+                <Link to="/meat/drone" className={classes.toDrone}>{" "}drones</Link>.
+              </Card.Text>
+            </Card.Body>
+          </Card> 
+        : ""
       }
-
-      { Number(cookies.droneCount) < 0 || Number(cookies.meatCount) > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
+      { droneCount < 0 || meatCount > 300*(Math.pow(10, hatcheryCount)) ?
         "" :
         <Card className={classes.tutorial1}>
           <Card.Body>
@@ -61,9 +57,8 @@ const Layout = (props) => {
           </Card.Body>
         </Card>
       }
-
       {
-        Number(cookies.meatCount) > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
+        meatCount > 300*(Math.pow(10, hatcheryCount)) ?
         <Card className={classes.tutorial1}>
           <Card.Body>
             <Card.Text>
@@ -73,7 +68,7 @@ const Layout = (props) => {
         </Card> : ""
       }
    
-      { close === false && Number(cookies.droneCount) === 0 || cookies.droneCount === undefined ? (
+      { close === false && droneCount === 0 || droneCount === undefined ? (
         <Viewwrap setClose={setClose} />
         ) : ( '')
       }

@@ -7,21 +7,17 @@ import classes from "../meat.module.css";
 import { Context } from "../../../context/AppContext";
 
 const DroneDetails = () => {
-  const { 
-    meatCount, 
-    setMeatCount, 
-    droneCount, 
-    setDroneCount,
-    larvaeNum,
-    setLarvaeNum,
-    queenCount, 
-    setQueenCount, 
+  const {
+    velocity,
+    meatCount, setMeatCount, 
+    droneCount, setDroneCount,
+    larvaeNum, setLarvaeNum,
+    queenCount, setQueenCount, 
+    queenClick, setQueenClick,
   } = useContext(Context);
-  const [ queenStateValue, setQueenStateValue ] = useState(0);
+  const [ cookies, setCookie ] = useCookies([ "queenTime" ]);
 
-  const [ cookies ] = useCookies([
-    "velocity", 
-  ]);
+  const [ queenStateValue, setQueenStateValue ] = useState(0);
 
   const handleQueenChange = (e) => {
     setQueenStateValue(e.target.value);
@@ -32,9 +28,16 @@ const DroneDetails = () => {
       alert("Please input number"); 
       return;
     }
+
+    if(cookies.queenTime === undefined) {
+      const time = new Date();
+      setCookie("queenTime", time, {path: "/"});
+    }
+
     if(queenCount === undefined) {
       setQueenCount(0 + Number(queenStateValue));
     }
+    setQueenClick(queenClick+1);
     setQueenCount(prevCount => Number(prevCount) + Number(queenStateValue))
     setMeatCount(meatCount - Number(queenStateValue*810));
     setDroneCount(droneCount - Number(queenStateValue*100));
@@ -53,14 +56,14 @@ const DroneDetails = () => {
       <p>You own {queenCount === 0 ? "no" : queenCount} queens.</p>
       <p>Each produces {' '}
         {
-          cookies.velocity === "seconds" ? "1.00000"
-        : cookies.velocity === "minutes" ? "60"
-        : cookies.velocity === "hours" ? "3,600"
-        : cookies.velocity === "days" ? "86,400"
+          velocity === "seconds" ? "1.00000"
+        : velocity === "minutes" ? "60"
+        : velocity === "hours" ? "3,600"
+        : velocity === "days" ? "86,400"
         : "900/wrap"
         }
           {' '} drones per {' '}
-        {cookies.velocity}. (×1.00 bonus)
+        {velocity}. (×1.00 bonus)
       </p>
       <div className={classes.divider} />
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">

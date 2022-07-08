@@ -15,19 +15,12 @@ const DroneDetails = () => {
     larvaeNum,  setLarvaeNum, 
     droneClick, setDroneClick,
     queenCount,
+    velocity,
     fasterDronesCounter,
     twinDronesCounter,
   } = useContext(Context);
   const [ droneStateValue, setDroneStateValue ] = useState(0);
-  const [ cookies, setCookie ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount",
-    "droneTime",
-    "droneClick",
-    "hatcheryCount",
-  ]);
+  const [ cookies, setCookie ] = useCookies([ "droneTime" ]);
 
   const handleDroneChange = (e) => {
     setDroneStateValue(e.target.value);
@@ -38,6 +31,7 @@ const DroneDetails = () => {
       alert("You do't have enough larvae");
       return;
     }
+
     if(cookies.droneTime === undefined) {
       const time = new Date();
       setCookie("droneTime", time, {path: "/"});
@@ -50,10 +44,7 @@ const DroneDetails = () => {
     setMeatCount(meatCount - Number(i*10));
     setLarvaeNum(larvaeNum - Number(i));
   }
-  
 
-  console.log("+++++++++++++++++++++", twinDronesCounter)
-  console.log("queenCount", queenCount)
   return (
     <div className={classes.droneDetails}>
       <Link 
@@ -66,25 +57,25 @@ const DroneDetails = () => {
       <p>You own {droneCount === 0 ? "no" : droneCount} drones.</p>
       <p>Each produces {' '}
         {
-          cookies.velocity === "seconds" ? "1.00000"
-        : cookies.velocity === "minutes" ? "60"
-        : cookies.velocity === "hours" ? "3,600"
-        : cookies.velocity === "days" ? "86,400"
+          velocity === "seconds" ? "1.00000"
+        : velocity === "minutes" ? "60"
+        : velocity === "hours" ? "3,600"
+        : velocity === "days" ? "86,400"
         : "900/wrap"
         }
           {' '}meat per {' '}
-        {cookies.velocity}. (×1.00 bonus)
+        {velocity}. (×1.00 bonus)
       </p>
       <p>
         In total, they produce {' '}
         {
-          cookies.velocity === "seconds" ? 1*cookies.droneCount
-        : cookies.velocity === "minutes" ? 60*Number(cookies.droneCount)
-        : cookies.velocity === "hours" ? 3600*Number(cookies.droneCount)
-        : cookies.velocity === "days" ? 86400*Number(cookies.droneCount)
-        : 900*Number(cookies.droneCount)
+          velocity === "seconds" ? 1*droneCount
+        : velocity === "minutes" ? 60*droneCount
+        : velocity === "hours" ? 3600*droneCount
+        : velocity === "days" ? 86400*droneCount
+        : 900*droneCount
         }
-        {' '}meat per {cookies.velocity}
+        {' '}meat per {velocity}
       </p>
       <div className={classes.divider} />
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">

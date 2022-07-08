@@ -2,43 +2,45 @@ import { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Col, Row, Card } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
-import { BsCheckLg, BsXLg } from "react-icons/bs";
+import { BsCheckLg, BsXLg, BsFillArrowUpCircleFill } from "react-icons/bs";
 import classes from "./meat.module.css";
 import { Context } from "../../context/AppContext";
-
 import { func } from '../../utils'
 
 const Meat = () => {
-  const { queenCount, setQueenCount, fasterDrones } = useContext(Context);
-  const [ cookies ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount",
-    "hatcheryCount",
-  ]);
+  const {
+    meatCount,
+    droneCount,
+    queenCount, 
+    fasterDrones,
+    twinDronesCounter,
+    fasterDronesCounter,  
+  } = useContext(Context);
+  const [ cookies ] = useCookies([ "goodStart" ]);
   const [ isShow, setIsShow ] = useState(true);
   const handleClose = () => {
-    setIsShow(true)
+    setIsShow(true);
   }
-  const value = cookies.meatCount;
-  const newValue = func(value);
+  const newValue = func(meatCount);
 
   return (
     <Row className={classes.height}>
       <Col md={3}>
-        { Number(cookies.droneCount) >= 10 || queenCount > 0 || fasterDrones > 0 ? 
+        { droneCount >= 10 || queenCount > 0 || fasterDrones > 0 ? 
             <Link className={classes.drone} to="/meat/queen">
               <div className={classes.drone_name}>Queen</div>
               <div className={classes.drone_value}>
-                {cookies.queenCount === undefined ? 0 : cookies.queenCount}
+                {queenCount === undefined ? 0 : queenCount}
               </div>
           </Link> : ""
         }
         <Link className={classes.drone} to="/meat/drone">
+          { queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
+            <BsFillArrowUpCircleFill size={16} color="#337ab7" /> : ""
+          }
           <div className={classes.drone_name}>Drone</div>
           <div className={classes.drone_value}>
-            {cookies.droneCount === undefined ? 0 : cookies.droneCount}
+            {droneCount === undefined ? 0 : droneCount}
           </div>
         </Link>
         <Link className={classes.meat} to="/meat/meat">

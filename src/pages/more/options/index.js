@@ -9,6 +9,7 @@ import { AiFillWarning, AiOutlineCloudUpload } from "react-icons/ai";
 import moment from "moment";
 import User from "./user";
 import classes from "./options.module.css";
+import { Context } from "../../../context/AppContext";
 
 new Clipboard('#data');
 
@@ -33,24 +34,15 @@ const StartModal = (props) => {
 }
 
 const Options = () => {
+  const { 
+    velocity, setVelocity,
+    numFormart, setNumFormart,
+    durationFormart, setDurationFormart,
+    selectedTheme, setSelectedTheme,
+  } = useContext(Context)
   const [ isShow, setIsShow ] = useState(false);
-  const [ cookies, setCookie, removeCookie ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount",
-    "hatcheryCount",
-    "startCount",
-    "startTime",
-    "advanceUnit",
-    "numFormart",
-    "durationFormart",
-    "theme"
-  ]);
-
+  const [ cookies, setCookie, removeCookie ] = useCookies([ "advanceUnit", "startTime" ]);
   const [ isChecked, setChecked ] = useState(cookies.advanceUnit || false);
-  const [ selectedTheme, setSelectedTheme ] = useState(cookies.theme || false);
-  
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -67,15 +59,15 @@ const Options = () => {
     event.target.select();
   };
   const handleVelocity = (e) => {
-    setCookie("velocity", e.target.value, { path: '/' });
+    setVelocity(e.target.value);
   }
 
   const handleNumFormat = (e) => {
-    setCookie("numFormart", e.target.value, { path: '/' });
+    setNumFormart(e.target.value);
   }
 
   const handleDuration = (e) => {
-    setCookie("durationFormart", e.target.value, { path: '/' });
+    setDurationFormart(e.target.value);
   }
 
   const handleStart = () => {
@@ -96,7 +88,7 @@ const Options = () => {
         <Form.Check.Input 
           type='checkbox' 
           isValid
-          checked={cookies.advanceUnit}
+          checked={isChecked}
           onChange={handleChecked}
         />
       </div>
@@ -117,7 +109,6 @@ const Options = () => {
       </div>
       <br></br>
       <p>Reduce this setting if the game is slowing down your computer. This doesn't affect gameplay; your units won't produce resources any faster or slower.</p>
-      
       <div className={classes.flex}>
         <ImBarcode />
         <strong style={{marginLeft: 5}}>Number format</strong>
@@ -127,10 +118,10 @@ const Options = () => {
           type='radio' 
           isValid
           value="standard"
-          checked={ cookies.numFormart === undefined ? cookies.numFormart === "standard" : cookies.numFormart === "standard"}
+          checked={ numFormart === undefined ? numFormart === "standard" : numFormart === "standard"}
           onChange={handleNumFormat}
         />
-        {' '}Standard decimal
+        {' '} Standard decimal
         (
           <Link
             className={classes.aTag}
@@ -144,7 +135,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="scientic"
-          checked={cookies.numFormart === "scientic" }
+          checked={numFormart === "scientic" }
           onChange={handleNumFormat} 
         />
         {' '}Scientific-E{' '}
@@ -152,7 +143,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="hybrid"
-          checked={cookies.numFormart === "hybrid" }
+          checked={numFormart === "hybrid" }
           onChange={handleNumFormat} 
         />
         {' '}Hybrid{' '}
@@ -160,16 +151,16 @@ const Options = () => {
           type='radio' 
           isValid
           value="engineering"
-          checked={cookies.numFormart === "engineering" }
+          checked={numFormart === "engineering" }
           onChange={handleNumFormat} 
         />
         {' '}Engineering
         <p>Examples: 
           { 
-            cookies.numFormart === "standard" ? "123.456 million, 123M, 123.456 undecillion, 123UDc"
-          : cookies.numFormart === "scientic" ? "1.23456e8, 1.23e8, 1.23456e38, 1.23e38"
-          : cookies.numFormart === "hybrid" ? "123.456 million, 123M, 1.23456e38, 1.23e38"
-          : cookies.numFormart === "engineering" ? "123.456E6, 123E6, 123.456E36, 123E36" 
+            numFormart === "standard" ? "123.456 million, 123M, 123.456 undecillion, 123UDc"
+          : numFormart === "scientic" ? "1.23456e8, 1.23e8, 1.23456e38, 1.23e38"
+          : numFormart === "hybrid" ? "123.456 million, 123M, 1.23456e38, 1.23e38"
+          : numFormart === "engineering" ? "123.456E6, 123E6, 123.456E36, 123E36" 
           : ""
           }
         </p>       
@@ -183,7 +174,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="seconds"
-          checked={ cookies.velocity === undefined ? cookies.velocity === "seconds" : cookies.velocity === "seconds"}
+          checked={ velocity === "seconds"}
           onChange={handleVelocity}
         />
         {' '}Seconds{' '}
@@ -191,7 +182,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="minutes"
-          checked={cookies.velocity === "minutes"}
+          checked={velocity === "minutes"}
           onChange={handleVelocity} 
         />
         {' '}Minutes{' '}
@@ -199,7 +190,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="hours"
-          checked={cookies.velocity === "hours"}
+          checked={velocity === "hours"}
           onChange={handleVelocity}
         />
         {' '}Hours{' '}
@@ -207,7 +198,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="days"
-          checked={cookies.velocity === "days"}
+          checked={velocity === "days"}
           onChange={handleVelocity} 
         />
         {' '}Days{' '}
@@ -215,24 +206,24 @@ const Options = () => {
           type='radio' 
           isValid
           value="swarmwraps"
-          checked={cookies.velocity === "sarmwraps"}
+          checked={velocity === "sarmwraps"}
           onChange={handleVelocity} 
         />
         {' '}Swarmwarps{' '}
         <p>Example: {' '}
           {
-            cookies.velocity === "seconds" ? 10
-          : cookies.velocity === "minutes" ? 600
-          : cookies.velocity === "hours" ? "36,000"
-          : cookies.velocity === "days" ? 864.000E3 
+            velocity === "seconds" ? 10
+          : velocity === "minutes" ? 600
+          : velocity === "hours" ? "36,000"
+          : velocity === "days" ? 864.000E3 
           : "9,000" 
           }
           {' '}meat/
           { 
-            cookies.velocity === "seconds" ? "sec"
-          : cookies.velocity === "minutes" ? "min"
-          : cookies.velocity === "hours" ? "hr"
-          : cookies.velocity === "days" ? "day" 
+            velocity === "seconds" ? "sec"
+          : velocity === "minutes" ? "min"
+          : velocity === "hours" ? "hr"
+          : velocity === "days" ? "day" 
           : "wrap" 
           }
         </p>
@@ -247,7 +238,7 @@ const Options = () => {
           type='radio' 
           isValid
           value="exact"
-          checked={  cookies.durationFormart === undefined ? cookies.durationFormart === "exact" : cookies.durationFormart === "exact" }
+          checked={  durationFormart === undefined ? durationFormart === "exact" : durationFormart === "exact" }
           onChange={handleDuration} 
         />
         {' '}Exact{' '}
@@ -255,14 +246,14 @@ const Options = () => {
           type='radio' 
           isValid
           value="approximate"
-          checked={cookies.durationFormart === "approximate"}
+          checked={durationFormart === "approximate"}
           onChange={handleDuration} 
         />
         {' '}Approximate{' '}
         <p>
           { 
-            cookies.durationFormart === "exact" ? "00:16, 2:43, 2:30:00, 23 days 7 hours, 2 months 7 days, 1 years 2 months"
-          : cookies.durationFormart === "approximate" ? "a few seconds, 3 minutes, 3 hours, 23 days, 2 months, a year"
+            durationFormart === "exact" ? "00:16, 2:43, 2:30:00, 23 days 7 hours, 2 months 7 days, 1 years 2 months"
+          : durationFormart === "approximate" ? "a few seconds, 3 minutes, 3 hours, 23 days, 2 months, a year"
           : ""
           }
         </p>

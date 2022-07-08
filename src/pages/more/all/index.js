@@ -2,8 +2,17 @@ import { useCookies } from "react-cookie";
 import { Row, Col } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import classes from "./all.module.css";
+import { useContext } from "react";
+import { Context } from "../../../context/AppContext";
 
 const All = () => {
+  const { 
+    meatCount,
+    droneCount,
+    larvaeNum,
+    velocity,
+    hatcheryCount,
+  } = useContext(Context)
   const [ cookies ] = useCookies([
     "velocity", 
     "larvaeCount", 
@@ -17,27 +26,27 @@ const All = () => {
       <Col md={3}>
         <Link className={classes.drone} to="meat">
           <div className={classes.drone_name}>Meat</div>
-          <div className={classes.drone_value}>{cookies.meatCount}</div>
+          <div className={classes.drone_value}>{meatCount}</div>
           <div className={classes.drone_value}>
-            +{cookies.droneCount == undefined  ? 0 : cookies.droneCount}/
+            +{droneCount === undefined  ? 0 : droneCount}/
             {
-              cookies.velocity === "seconds" ? "sec" :
-              cookies.velocity === "minutes" ? "min" :
-              cookies.velocity === "hours" ? "hour" :
-              cookies.velocity === "days" ? "days" : "wrap"
+              velocity === "seconds" ? "sec" :
+              velocity === "minutes" ? "min" :
+              velocity === "hours" ? "hour" :
+              velocity === "days" ? "days" : "wrap"
             }
           </div>
         </Link>
         <Link className={classes.meat} to="larva">
           <div className={classes.drone_name}>Larva</div>
-          <div className={classes.drone_value}>{cookies.larvaeCount}</div>
+          <div className={classes.drone_value}>{larvaeNum}</div>
           <div className={classes.drone_value}>
-            +{cookies.hatcheryCount == undefined ? 1 : (Number(cookies.hatcheryCount)+1)}/
+            +{hatcheryCount === undefined ? 1 : (Number(hatcheryCount)+1)}/
             {
-              cookies.velocity === "seconds" ? "sec" :
-              cookies.velocity === "minutes" ? "min" :
-              cookies.velocity === "hours" ? "hour" :
-              cookies.velocity === "days" ? "days" : "wrap"
+              velocity === "seconds" ? "sec" :
+              velocity === "minutes" ? "min" :
+              velocity === "hours" ? "hour" :
+              velocity === "days" ? "days" : "wrap"
             }
           </div>
         </Link>
@@ -47,7 +56,7 @@ const All = () => {
         </Link>
         <Link className={classes.meat} to="drone">
           <div className={classes.drone_name}>Drone</div>
-          <div className={classes.drone_value}>{cookies.droneCount == undefined  ? 0 : cookies.droneCount}</div>
+          <div className={classes.drone_value}>{droneCount === undefined  ? 0 : droneCount}</div>
         </Link>
       </Col>
       <Col md={9}>

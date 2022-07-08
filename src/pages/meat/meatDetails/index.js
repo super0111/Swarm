@@ -1,10 +1,16 @@
+import { useContext } from "react";
 import { useCookies } from "react-cookie";
 import { BsXLg } from "react-icons/bs";
 import { Link } from 'react-router-dom';
+import { Context } from "../../../context/AppContext";
 import classes from "../meat.module.css"
 
 const MeatDetails = () => {
-    const [ cookies ] = useCookies(["velocity", "meatCount"]);
+    const { 
+        meatCount,
+        droneCount,
+        velocity,
+    } = useContext(Context)
     return (
         <div className={classes.meatDetails}>
             <Link 
@@ -14,16 +20,16 @@ const MeatDetails = () => {
                 Meat
             </Link>
             <p>Meat is delicious. All of your swarm's creatures eat meat.</p>
-            <p>You own {cookies.meatCount} meat.</p>
+            <p>You own {meatCount} meat.</p>
             <p>You earn {' '}
                 { 
-                 cookies.velocity === "seconds" ? 1*cookies.droneCount
-                 : cookies.velocity === "minutes" ? 60*Number(cookies.droneCount)
-                 : cookies.velocity === "hours" ? 3600*Number(cookies.droneCount)
-                 : cookies.velocity === "days" ? 86400*Number(cookies.droneCount)
-                 : 900*Number(cookies.droneCount)
+                 velocity === "seconds" ? 1*droneCount
+                 : velocity === "minutes" ? 60*droneCount
+                 : velocity === "hours" ? 3600*droneCount
+                 : velocity === "days" ? 86400*droneCount
+                 : 900*droneCount
                 } 
-              {' '}meat per {cookies.velocity}.
+              {' '}meat per {velocity}.
             </p>
             <Link
                 to="/meat"

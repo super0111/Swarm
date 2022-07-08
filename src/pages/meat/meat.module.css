@@ -4,6 +4,7 @@
 .meat {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 20px;
     border-bottom: 1px solid rgb(203, 203, 203);
     cursor: pointer;
@@ -16,6 +17,7 @@
 .drone {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 20px;
     border-bottom: 1px solid rgb(203, 203, 203);
     cursor: pointer;

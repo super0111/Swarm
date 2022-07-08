@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useCookies } from "react-cookie";
 import classes from "../../meat.module.css";
 import { Button, ProgressBar } from "react-bootstrap"
 import { Context } from "../../../../context/AppContext";
@@ -8,6 +9,8 @@ const FasterDrones = () => {
     droneCount, setDroneCount,
     fasterDronesCounter, setFasterDrones,
   } = useContext(Context);
+  const [ cookies, setCookie ] = useCookies([ "fasterDronesTime" ]);
+
   const [hatPercentage, setHatPercentage] = useState(0);
 
   useEffect(() => {
@@ -16,6 +19,12 @@ const FasterDrones = () => {
   }, [droneCount])
 
   const handleFasterDrones = () => {
+
+    if(cookies.fasterDronesTime === undefined) {
+      const time = new Date();
+      setCookie("fasterDronesTime", time, {path: "/"});
+    }
+ 
     setFasterDrones(fasterDronesCounter + 1);
     setDroneCount(prevCount => Number(prevCount) - 66*(fasterDronesCounter+1));
   }

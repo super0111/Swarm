@@ -13,7 +13,6 @@ import {
 } from "react-icons/gi";
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCookies } from "react-cookie";
 import { AiOutlineContainer } from "react-icons/ai";
 import { BsFillFileEarmarkFontFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { Nav, NavDropdown } from 'react-bootstrap';
@@ -33,16 +32,15 @@ const LinkButton = (props) => {
 }
 
 const Navbar = () => {
-  const { meatCount, larvaeCount } = useContext(Context);
-  const [ cookies ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "droneCount",
-    "hatcheryCount",
-    "startCount",
-    "startTime",
-  ]);
+  const { 
+    meatCount,
+    droneCount,
+    larvaeNum,
+    queenCount,
+    hatcheryCount,
+    fasterDronesCounter,
+    twinDronesCounter,
+  } = useContext(Context);
   const [ active, setActive ] = useState("meat");
   const styles = {
     textformat: {
@@ -51,10 +49,8 @@ const Navbar = () => {
       marginLeft: 5,
     }
   };
-  const value = meatCount;
-  const newValue = func(value);
-  const larvaeValue =  cookies.larvaeCount;
-  const newLarvaeValue = func(larvaeValue);
+  const newValue = func(meatCount);
+  const newLarvaeValue = func(larvaeNum);
 
   return (
     <Nav 
@@ -70,7 +66,10 @@ const Navbar = () => {
             to='/meat'
             style={{ color: '#337ab7', textDecoration: "none" }}
           >
-            { newValue } meat
+            { newValue } meat {' '}
+            { queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
+              <BsFillArrowUpCircleFill size={12} color="#337ab7" /> : ""
+            }
           </LinkButton>
         </Nav.Link>
       </Nav.Item>
@@ -82,8 +81,8 @@ const Navbar = () => {
             to='/larvae'
             style={{ color: "#337ab7", textDecoration: "none" }}
           >
-            {newLarvaeValue } {' '}larvae{' '}
-            { meatCount > 300*(Math.pow(10, Number(cookies.hatcheryCount))) ?
+            { newLarvaeValue } {' '}larvae{' '}
+            { meatCount > 300*(Math.pow(10, hatcheryCount)) ?
               <BsFillArrowUpCircleFill size={12} color="#337ab7" /> : ""
             }
           </LinkButton>

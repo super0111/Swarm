@@ -7,54 +7,40 @@ import classes from "../larvae.module.css"
 import { Context } from "../../../context/AppContext";
 
 const LarvaDetails = () => {
-  const { meatCount, setMeatCount } = useContext(Context);
-  const [ cookies, setCookie ] = useCookies([
-    "velocity", 
-    "larvaeCount", 
-    "meatCount", 
-    "hatcheryCount",
-    "hatcheryClick",
-    "hatcheryTime",
-  ]);
-  const [hatPercentage, setHatPercentage] = useState(0)
-  const { hatcheryCount, setHatcheryCount } = useContext(Context);
-  const [ hatcheryClick, setHatcheryClick ] = useState(Number(cookies.hatcheryClick) || 0);
+  const { 
+    velocity,
+    larvaeNum,
+    meatCount, setMeatCount,
+    hatcheryClick, setHatcheryClick,
+    hatcheryCount, setHatcheryCount,
+  } = useContext(Context);
+  const [ cookies, setCookie ] = useCookies([ "hatcheryTime" ]);
+  const [hatPercentage, setHatPercentage] = useState(0);
   const [ buttons, setButtons ] = useState([1]);
 
   const ExpPercentage = 0;
 
   useEffect(() => {
-    const _hatPercentage = Math.trunc( Number(cookies.meatCount)/(300*(Math.pow(10, (hatcheryClick))))*100);
+    const _hatPercentage = Math.trunc( meatCount/(300*(Math.pow(10, hatcheryCount)))*100);
     setHatPercentage(_hatPercentage % 100);
     if( _hatPercentage > 100 ) {
-      setHatcheryClick(hatcheryClick +1)
-      setButtons([...buttons, hatcheryClick + 1])
+      setHatcheryCount(hatcheryCount +1);
+      setButtons([...buttons, hatcheryCount + 1]);
     }
-  })
+  }, [meatCount])
 
-  const handleHatchery = (i) => {
-    if(Number(cookies.hatcheryClick) === 0) {
+  const handleHatchery = () => {
+    console.log("hatcheryClick", hatcheryClick)
+    if(hatcheryClick === 0 ) {
       const time = new Date();
-      setCookie("hatcheryTime", time ,{ path: '/' });
+      console.log("time", time)
+      setCookie("hatcheryTime", time, {path: "/"});
     }
-    setHatcheryCount( prevCount => Number(prevCount) + 1);
-    setMeatCount(meatCount - 300*Math.pow(10, i));
+
+    setHatcheryCount( hatcheryCount + 1);
+    setMeatCount(meatCount - 300*Math.pow(10, hatcheryClick));
     setHatcheryClick(hatcheryClick + 1);
   }
-
-  useEffect(() => {
-    setCookie("meatCount", meatCount , { path: '/' });
-  }, [ meatCount ])
-
-  useEffect(() => {
-    setCookie("hatcheryCount", hatcheryCount , { path: '/' });
-  }, [ hatcheryCount ])
-
-  useEffect(() => {
-    setCookie("hatcheryClick", hatcheryClick , { path: '/' });
-  }, [ hatcheryClick ])
-
-  console.log("hatcheryClick", hatcheryClick)
 
   return (
     <div className={classes.larvaDetails}>
@@ -65,41 +51,41 @@ const LarvaDetails = () => {
         Larva
       </Link>
       <p>The children of your swarm. These young morph into other adult units.</p>
-      <p>You own { cookies.larvaeCount } larvae</p>
+      <p>You own { larvaeNum } larvae</p>
       <p>
         You earn {' '}
         {
-          cookies.velocity === "seconds" ? 1*(Number(cookies.hatcheryCount)+1)
-        : cookies.velocity === "minutes" ? 60*(Number(cookies.hatcheryCount)+1)
-        : cookies.velocity === "hours" ? 3600*(Number(cookies.hatcheryCount)+1)
-        : cookies.velocity === "days" ? 86400*(Number(cookies.hatcheryCount)+1)
-        : 900*(Number(cookies.hatcheryCount)+1)
+          velocity === "seconds" ? 1*hatcheryClick+1
+        : velocity === "minutes" ? 60*hatcheryClick+1
+        : velocity === "hours" ? 3600*hatcheryClick+1
+        : velocity === "days" ? 86400*hatcheryClick+1
+        : 900*hatcheryClick+1
         }
         {' '}larvae per {' '}
-        {cookies.velocity}. (×1.00 bonus)</p>
+        {velocity}. (×1.00 bonus)</p>
       <hr />
       <h4>Upgrades</h4>
-      <p>Hatchery ({cookies.hatcheryCount})</p>
+      <p>Hatchery ({hatcheryClick})</p>
       <p>
         Each hatchery produces more larvae per second. Currently, your hatcheries produce a total of {' '} 
         {
-          cookies.velocity === "seconds" ? 1*(Number(cookies.hatcheryCount)+1)
-        : cookies.velocity === "minutes" ? 60*(Number(cookies.hatcheryCount)+1)
-        : cookies.velocity === "hours" ? 3600*(Number(cookies.hatcheryCount)+1)
-        : cookies.velocity === "days" ? 86400*(Number(cookies.hatcheryCount)+1)
-        : 900*(Number(cookies.hatcheryCount)+1)
+          velocity === "seconds" ? 1*hatcheryClick+1
+        : velocity === "minutes" ? 60*hatcheryClick+1
+        : velocity === "hours" ? 3600*hatcheryClick+1
+        : velocity === "days" ? 86400*hatcheryClick+1
+        : 900*hatcheryClick+1
         }
-        {' '}larvae per {cookies.velocity}. 
+        {' '}larvae per {velocity}. 
         With no multipliers, they would produce {' '}
         {
-          cookies.velocity === "seconds" ? 1
-        : cookies.velocity === "minutes" ? 60
-        : cookies.velocity === "hours" ? 3600
-        : cookies.velocity === "days" ? 86400
+          velocity === "seconds" ? 1
+        : velocity === "minutes" ? 60
+        : velocity === "hours" ? 3600
+        : velocity === "days" ? 86400
         : 900
         } 
-        {' '}larvae per {cookies.velocity}.</p>
-      <p>Next upgrade costs {300*(Math.pow(10, hatcheryCount))} meat</p>
+        {' '}larvae per {velocity}.</p>
+      <p>Next upgrade costs {300*(Math.pow(10, hatcheryClick))} meat</p>
       <ProgressBar
         className={classes.progressBar}
         now={hatPercentage} 
@@ -109,15 +95,15 @@ const LarvaDetails = () => {
       />
         <Button
           disabled={
-            meatCount > 300*(Math.pow(10, hatcheryCount)) ? false : true
+            // false  
+            meatCount > 300*(Math.pow(10, hatcheryClick)) ? false : true
           }
           variant="outline-secondary"
           className={classes.disable_btn}
           onClick={ () => handleHatchery()}
         >
-        { cookies.meatCount < 300*(Math.pow(10, hatcheryCount)) ? "Can't buy" : "Buy" }
+        { meatCount < 300*(Math.pow(10, hatcheryClick)) ? "Can't buy" : "Buy" }
       </Button>
-      
       <p>Expansion (0) </p>
       <p>Each expansion increases your hatcheries' larvae production by 10%. Currently, your expansions increase hatchery production by 0%.</p>
       <p>Next upgrade costs 10 territory</p>
