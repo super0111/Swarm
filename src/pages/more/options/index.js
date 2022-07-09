@@ -1,14 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
-import { Container, Form, Dropdown, Card, Button, Modal } from "react-bootstrap"
+import { Container, Form, Card, Button, Modal } from "react-bootstrap";
 import { BsFillEyeFill, BsFilm, BsDownload } from "react-icons/bs";
-import { ImBarcode, ImImage } from "react-icons/im";
 import Clipboard from 'clipboard';
 import { AiFillWarning, AiOutlineCloudUpload } from "react-icons/ai";
 import moment from "moment";
 import User from "./user";
 import classes from "./options.module.css";
+import Theme from "./theme";
+import NumberFormart from "./numberFormart";
+import VelocityFormart from "./velocityFormart";
+import DurationFormart from "./durationFormart";
 import { Context } from "../../../context/AppContext";
 
 new Clipboard('#data');
@@ -39,10 +41,10 @@ const Options = () => {
     numFormart, setNumFormart,
     durationFormart, setDurationFormart,
     selectedTheme, setSelectedTheme,
+    advanceUnit, setAdvanceUnit,
   } = useContext(Context)
   const [ isShow, setIsShow ] = useState(false);
-  const [ cookies, setCookie, removeCookie ] = useCookies([ "advanceUnit", "startTime" ]);
-  const [ isChecked, setChecked ] = useState(cookies.advanceUnit || false);
+  const [ cookies, setCookie, removeCookie ] = useCookies([ "startTime" ]);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -50,7 +52,7 @@ const Options = () => {
 
   const data = "MS4xLjEz|Q2hlYXRlciA6KAoKN4IgrgdglgLjCeAHApgZxALlFCA3KqUARgDbIAWAhjAMbnIBO8mIAjCADQgC2y1LAZgCsnECUoNclFqwAMomgHsliiC3lcYjBrEVN1o5BEYBzZhhAaQDNChoBRYwzMGu3GAA9Hp85dHGPMHQLKxomVBhKElceMEiTIxjEG244ygS1ENFKVBojQlUYgDMbZAAlW2QaFgAWUQATBlVkGIBHMGRErK5jCJiTG2pGds7Mvy5yKFwW7pBJ6ZGu8ZBkbmS0YOXkxUR6GH7FevqNpMoIGHpC2cQzi+RVACZT88uIAWe71Trr29eRWcU0wY3Bw9RigMYIIg9SeAKBUPq7zhkNB32WEOBoP+6PhoIAbDFUAB3CTcEg4EyEmAUxiExBQY4MGLcRSodq6GIkZRBfazJqUOj9KC3VD0xkxPLnKAoY4xEmimLHXCKMA2JmzEyKK7LaAmcgwIhgSmzFkXGJEfgmtIvah0Ri+KypSLnC285ZO240LnGZnWmDE0kkhiIX3OmAMILkUO3PiCq1hkrIVrR84BIIpyLAh2iD3nXiWvwAXy49SGmFAEQkWjBFgesgeDwAtLI8Y2BLIACqsPEYGqsXs1AB0AA4+wAtUQ2SsMassOsN5ut9tdnt9gcj8eiVCUaY1kDzpsttud1jDjAPHtCViD1gATlkE64NigRSgyD3B8Xx5Xvf7NSHo6sI+IBeqy75zvWh5Lieq5/gBm7FiAOzUqowQVuQihEgAgvUUgQHk9QAKrQDAAAi1DSBgRRRKgyBcEUiCoFhcSKJg1EkLR9GMZgDwAOw9IokQoWMRgmDgnQ6BAlIlqq1BQKoABiejcAW5BgCpahcAQADCPKKNwHb0LwbE0XRIB3MZFh5BGZBnNkLGIJGJkccgiFgIgAyUMcaGIZW1IRFANBoSARDwMRsDlohoWER5DBeTMwCIV6gUANbBLIiECpMyDTLw5zBXQZwJFyxpXqwDxCDUiEkrQ9A1olXCoCl0oygAslAJDkulXBAgUmQVpms4WNeI3vI1O7gcNN43u8mV0G+uVGP6ADKGFEv1KwSMYNbhh0XCQHwDDbZgu1mSpTWTadXB6OKFjHNRYAkPsT45YwtEnRGrmFkAA";
   
-  const handleSelect = (eventKey) => {
+  const handleThemeSelect = (eventKey) => {
     setSelectedTheme(eventKey);
   };
 
@@ -70,26 +72,20 @@ const Options = () => {
     setDurationFormart(e.target.value);
   }
 
-  const handleStart = () => {
+  const handleRemoveCook = () => {
     cookies.remove('larvaeCount', { path: '/' });
   }
 
-  const handleChecked = (e) => {
-    setChecked(e.target.checked)
-    setCookie("advanceUnit", e.target.checked, {path: "/"});
-  }
-  
   return (
     <Container>
       <h1>Options</h1>
       <div className={classes.flex}>
         <BsFillEyeFill />
-        <strong style={{margin: "0 5px"}}>Show advanced unit data</strong>
-        <Form.Check.Input 
-          type='checkbox' 
-          isValid
-          checked={isChecked}
-          onChange={handleChecked}
+        <strong style={{margin: "0 5px"}}> Show advanced unit data </strong>
+        <Form.Check
+          type="checkbox"
+          checked={advanceUnit}
+          onChange={ () => {setAdvanceUnit(!advanceUnit)} }
         />
       </div>
       <p>Show more detailed numbers for each of your units, and allow customizing when each upgrade notifier appears.</p>
@@ -109,197 +105,10 @@ const Options = () => {
       </div>
       <br></br>
       <p>Reduce this setting if the game is slowing down your computer. This doesn't affect gameplay; your units won't produce resources any faster or slower.</p>
-      <div className={classes.flex}>
-        <ImBarcode />
-        <strong style={{marginLeft: 5}}>Number format</strong>
-      </div>
-      <div>
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="standard"
-          checked={ numFormart === undefined ? numFormart === "standard" : numFormart === "standard"}
-          onChange={handleNumFormat}
-        />
-        {' '} Standard decimal
-        (
-          <Link
-            className={classes.aTag}
-            to="/decimallegend"
-          >
-            legend
-          </Link>
-        )
-        {' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="scientic"
-          checked={numFormart === "scientic" }
-          onChange={handleNumFormat} 
-        />
-        {' '}Scientific-E{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="hybrid"
-          checked={numFormart === "hybrid" }
-          onChange={handleNumFormat} 
-        />
-        {' '}Hybrid{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="engineering"
-          checked={numFormart === "engineering" }
-          onChange={handleNumFormat} 
-        />
-        {' '}Engineering
-        <p>Examples: 
-          { 
-            numFormart === "standard" ? "123.456 million, 123M, 123.456 undecillion, 123UDc"
-          : numFormart === "scientic" ? "1.23456e8, 1.23e8, 1.23456e38, 1.23e38"
-          : numFormart === "hybrid" ? "123.456 million, 123M, 1.23456e38, 1.23e38"
-          : numFormart === "engineering" ? "123.456E6, 123E6, 123.456E36, 123E36" 
-          : ""
-          }
-        </p>       
-      </div>
-      <div className={classes.flex}>
-        <ImBarcode />
-        <strong style={{marginLeft: 5}}> Velocity format</strong>
-      </div>
-      <div>
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="seconds"
-          checked={ velocity === "seconds"}
-          onChange={handleVelocity}
-        />
-        {' '}Seconds{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="minutes"
-          checked={velocity === "minutes"}
-          onChange={handleVelocity} 
-        />
-        {' '}Minutes{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="hours"
-          checked={velocity === "hours"}
-          onChange={handleVelocity}
-        />
-        {' '}Hours{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="days"
-          checked={velocity === "days"}
-          onChange={handleVelocity} 
-        />
-        {' '}Days{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="swarmwraps"
-          checked={velocity === "sarmwraps"}
-          onChange={handleVelocity} 
-        />
-        {' '}Swarmwarps{' '}
-        <p>Example: {' '}
-          {
-            velocity === "seconds" ? 10
-          : velocity === "minutes" ? 600
-          : velocity === "hours" ? "36,000"
-          : velocity === "days" ? 864.000E3 
-          : "9,000" 
-          }
-          {' '}meat/
-          { 
-            velocity === "seconds" ? "sec"
-          : velocity === "minutes" ? "min"
-          : velocity === "hours" ? "hr"
-          : velocity === "days" ? "day" 
-          : "wrap" 
-          }
-        </p>
-      </div>
-
-      <div className={classes.flex}>
-        <ImBarcode />
-        <strong style={{marginLeft: 5}}>Duration format</strong>
-      </div>
-      <div>
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="exact"
-          checked={  durationFormart === undefined ? durationFormart === "exact" : durationFormart === "exact" }
-          onChange={handleDuration} 
-        />
-        {' '}Exact{' '}
-        <Form.Check.Input 
-          type='radio' 
-          isValid
-          value="approximate"
-          checked={durationFormart === "approximate"}
-          onChange={handleDuration} 
-        />
-        {' '}Approximate{' '}
-        <p>
-          { 
-            durationFormart === "exact" ? "00:16, 2:43, 2:30:00, 23 days 7 hours, 2 months 7 days, 1 years 2 months"
-          : durationFormart === "approximate" ? "a few seconds, 3 minutes, 3 hours, 23 days, 2 months, a year"
-          : ""
-          }
-        </p>
-      </div>
-
-      <Dropdown onSelect={handleSelect}>
-        <Dropdown.Toggle 
-          className={classes.toggle_btn} 
-          variant="outline-secondary" 
-          id="dropdown-basic"
-        >
-          <ImImage />Theme<strong style={{color: "red"}}>(BETA)</strong>
-        </Dropdown.Toggle>
-        <Dropdown.Menu className={classes.dropdown}>
-          <Dropdown.Item eventKey='default' >Default White</Dropdown.Item>
-          <Dropdown.Item eventKey='cerulean' >Cerulean</Dropdown.Item>
-          <Dropdown.Item eventKey='cosmo' >Cosmo</Dropdown.Item>
-          <Dropdown.Item eventKey='cyborg' >Cyborg</Dropdown.Item>
-          <Dropdown.Item eventKey='darkly' >Darkly</Dropdown.Item>
-          <Dropdown.Item eventKey='flatly' >Flatly</Dropdown.Item>
-          <Dropdown.Item eventKey='journal' >Journal</Dropdown.Item>
-          <Dropdown.Item eventKey='lumen' >Lumen</Dropdown.Item>
-          <Dropdown.Item eventKey='paper' >Paper</Dropdown.Item>
-          <Dropdown.Item eventKey='readable' >Readable</Dropdown.Item>
-          <Dropdown.Item eventKey='sandstone' >Sandstone</Dropdown.Item>
-          <Dropdown.Item eventKey='simplex' >Simplex</Dropdown.Item>
-          <Dropdown.Item eventKey='slate' >Slate</Dropdown.Item>
-          <Dropdown.Item eventKey='spacelab' >Spacelab</Dropdown.Item>
-          <Dropdown.Item eventKey='superhero' >Superhero</Dropdown.Item>
-          <Dropdown.Item eventKey='united' >United</Dropdown.Item>
-          <Dropdown.Item eventKey='yeti' >Yeti</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item eventKey='custom' >Custom Style</Dropdown.Item>
-          <Dropdown.Item eventKey='additional' >Additional styling (advanced)</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-      <p>
-        Current theme:{' '} 
-        <a 
-          className={classes.selectedTheme}
-          href="https://bootswatch.com/default/"
-          target="_blannk"
-        >
-          {selectedTheme}
-        </a>
-      </p>
+      <NumberFormart numFormart={numFormart} handleNumFormat={handleNumFormat} />
+      <VelocityFormart velocity={velocity} handleVelocity={handleVelocity} />
+      <DurationFormart durationFormart={durationFormart} handleDuration={handleDuration}  />
+      <Theme selectedTheme={selectedTheme} handleThemeSelect={handleThemeSelect} />
       <div className={classes.flex}>
         <img src="/img/playfab.0ef01669.png" style={{width: 20}} />
         <strong style={{marginLeft: 5}}>Sync saved data with other devices{' '}<strong style={{color: "red"}}>(BETA)</strong></strong>
@@ -321,7 +130,7 @@ const Options = () => {
         onChange={handleChange}
         onFocus={handleFocus}
       />
-        <p>To export, click the text above and 
+      <p>To export, click the text above and 
         <button 
           className={classes.copy_btn}
           id="data" 

@@ -1,6 +1,11 @@
 .height {
     height: 350px;
 }
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .larva {
     display: flex;
     justify-content: space-between;
@@ -60,4 +65,21 @@
     font-weight: bold;
     color: #5d7488;
     cursor: pointer;
+}
+.toggle_btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 180px;
+    height: 30px;
+    margin-left: 5px;
+    background-color: none !important;
+    border-color: rgba(0,0,0,0.1) !important;
+    color: #3f3e3e;
+    outline: none;
+    outline-color: #555555;
+}
+.toggle_btn:hover {
+    background: none !important;
+    color: #3f3e3e;
 }

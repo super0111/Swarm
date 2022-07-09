@@ -3,11 +3,14 @@ import { useCookies } from "react-cookie";
 import classes from "../../meat.module.css";
 import { Button, ProgressBar } from "react-bootstrap"
 import { Context } from "../../../../context/AppContext";
+import FasterUnit from "./fasterUnit";
 
 const FasterDrones = () => {
   const {
     droneCount, setDroneCount,
     fasterDronesCounter, setFasterDrones,
+    advanceUnit,
+    fasterNotify,
   } = useContext(Context);
   const [ cookies, setCookie ] = useCookies([ "fasterDronesTime" ]);
 
@@ -33,21 +36,29 @@ const FasterDrones = () => {
     <>
       <div className={classes.divider}></div>
       <h5>Upgrades</h5>
-      <p>Faster Drones ({fasterDronesCounter})</p>
-      <p>Drones gather more meat.</p>
-      <p>Next upgrade costs {66*(fasterDronesCounter+1)} drones..</p>
-      <ProgressBar  now={hatPercentage} label={`${hatPercentage}% `} />
-      <Button
-        disabled={
-          droneCount > 66*(fasterDronesCounter+1) ? false : true
-        }
-        variant="outline-secondary"
-        className={classes.disable_btn}
-        style={{marginBottom: 50}}
-        onClick={handleFasterDrones}
-      >
-        { droneCount > 66*(fasterDronesCounter+1) ? "buy" : "Can't buy" }
-      </Button>
+      <div className={classes.flex}>
+        <p>Faster Drones ({fasterDronesCounter})</p>
+        { advanceUnit === true ? <FasterUnit /> : "" }
+      </div>
+      {
+        fasterNotify === "hide" ? "" : 
+        <>
+          <p>Drones gather more meat.</p>
+          <p>Next upgrade costs {66*(fasterDronesCounter+1)} drones..</p>
+          <ProgressBar  now={hatPercentage} label={`${hatPercentage}% `} />
+          <Button
+            disabled={
+              droneCount > 66*(fasterDronesCounter+1) ? false : true
+            }
+            variant="outline-secondary"
+            className={classes.disable_btn}
+            style={{marginBottom: 50}}
+            onClick={handleFasterDrones}
+          >
+            { droneCount > 66*(fasterDronesCounter+1) ? "buy" : "Can't buy" }
+          </Button>
+        </>
+      }
     </>
   )
 }

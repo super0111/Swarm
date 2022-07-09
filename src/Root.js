@@ -24,10 +24,11 @@ import { useEffect, useContext } from 'react'
 import { Context } from './context/AppContext'
 
 export const Root = () => {
-
   const {
     startCount,
     velocity,
+    numFormart,
+    durationFormart,
     meatCount, 
     droneCount, 
     larvaeNum,
@@ -38,11 +39,17 @@ export const Root = () => {
     queenClick,
     hatcheryCount, 
     hatcheryClick, 
-    hatcheryTime,
+    advanceUnit,
+    upgradeNotify,
+    expansionNotify,
+    fasterNotify,
+    twinNotify,
   } = useContext(Context)
   const [ cookies, setCookie ] = useCookies([
     "startCount",
     "velocity", 
+    "numFormart",
+    "durationFormart",
     "meatCount", 
     "droneCount",
     "larvaeCount",
@@ -53,6 +60,11 @@ export const Root = () => {
     "hatcheryCount",
     "hatcheryClick",
     "hatcheryTime",
+    "isCheckedUnit",
+    "upgradeNotify",
+    "expansionNotify",
+    "fasterNotify",
+    "twinNotify",
   ]);
 
   useEffect(() => {
@@ -62,6 +74,14 @@ export const Root = () => {
   useEffect(() => {
     setCookie("velocity", velocity , { path: '/' });
   }, [ velocity ])
+
+  useEffect(() => {
+    setCookie("numFormart", numFormart , { path: '/' });
+  }, [ numFormart ])
+  
+  useEffect(() => {
+    setCookie("durationFormart", durationFormart , { path: '/' });
+  }, [ durationFormart ])
 
   useEffect(() => {
     setCookie("meatCount", meatCount , { path: '/' });
@@ -102,6 +122,23 @@ export const Root = () => {
   useEffect(() => {
     setCookie("hatcheryClick", hatcheryClick , { path: '/' });
   }, [ hatcheryClick ])
+
+  useEffect(() => {
+    setCookie("advanceUnit", advanceUnit , { path: '/' });
+  }, [ advanceUnit ])
+
+  useEffect(() => {
+    setCookie("upgradeNotify", upgradeNotify , { path: '/' });
+  }, [ upgradeNotify ])
+  useEffect(() => {
+    setCookie("expansionNotify", expansionNotify , { path: '/' });
+  }, [ expansionNotify ])
+  useEffect(() => {
+    setCookie("fasterNotify", fasterNotify , { path: '/' });
+  }, [ fasterNotify ])
+  useEffect(() => {
+    setCookie("twinNotify", twinNotify , { path: '/' });
+  }, [ twinNotify ])
 
   return (
     <BrowserRouter>

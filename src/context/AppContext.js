@@ -10,9 +10,9 @@ const [ cookies, setCookie ] = useCookies([
   "startTime",
 ]);
 
-const [ velocity, setVelocity ] = useState(Number(cookies.velocity) || "seconds");
-const [ numFormart, setNumFormart ] = useState(Number(cookies.numFormart) || "standard");
-const [ durationFormart, setDurationFormart ] = useState(Number(cookies.durationFormart) || "exact");
+const [ velocity, setVelocity ] = useState(cookies.velocity || "seconds");
+const [ numFormart, setNumFormart ] = useState(cookies.numFormart || "standard");
+const [ durationFormart, setDurationFormart ] = useState(cookies.durationFormart || "exact");
 const [ larvaeNum, setLarvaeNum ] = useState(Number(cookies.larvaeCount) || 10);
 const [ meatCount, setMeatCount ] = useState(Number(cookies.meatCount) || 35);
 const [ droneCount, setDroneCount ] = useState(Number(cookies.droneCount) || 0);
@@ -28,6 +28,12 @@ const [ hatcheryTime, setHatcheryTime ]= useState(Number(cookies.hatcheryTime) |
 const [ startCount, setStartCount ]= useState(Number(cookies.startCount) || 0);
 const [ currentUser, setCurrentUser ] = useState("");
 const [ selectedTheme, setSelectedTheme ] = useState(cookies.theme || false);
+const [ advanceUnit, setAdvanceUnit ] = useState(cookies.advanceUnit || false);
+
+const [ upgradeNotify, setUpgradeNotify ] = useState(cookies.upgradeNotify || "buyable");
+const [ expansionNotify , setExpansionNotify ] = useState(cookies.expansionNotify || "buyable");
+const [ fasterNotify , setFasterNotify ] = useState(cookies.fasterNotify || "buyable");
+const [ twinNotify , setTwinNotify ] = useState(cookies.twinNotify || "buyable");
 
 useInterval(() => {
   setMeatCount((prevCounter) => {
@@ -71,6 +77,11 @@ useEffect(() => {
         numFormart, setNumFormart,
         durationFormart, setDurationFormart,
         selectedTheme, setSelectedTheme,
+        advanceUnit, setAdvanceUnit,
+        expansionNotify , setExpansionNotify,
+        upgradeNotify, setUpgradeNotify,
+        fasterNotify , setFasterNotify,
+        twinNotify , setTwinNotify,
       }}
     >
       {children}
