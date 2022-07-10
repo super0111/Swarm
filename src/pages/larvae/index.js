@@ -9,18 +9,19 @@ import { Context } from "../../context/AppContext";
 
 const Larvae = () => {
   const { 
-    hatcheryCount, 
+    hatcheryClick,
     meatCount,
     larvaeNum,
     velocity,
+    upgradeNotify,
   } = useContext(Context);
 
   return (
     <Row className={classes.height}>
       <Col md={3}>
         <Link className={classes.larva} to='larva'>
-          { meatCount > 300*(Math.pow(10, hatcheryCount)) ?
-            <BsFillArrowUpCircleFill color="#337ab7" /> : ""        
+          { upgradeNotify === "never" ? "" : meatCount > 300*(Math.pow(10, hatcheryClick)) ?
+            <BsFillArrowUpCircleFill color="#337ab7" /> : ""
           }
           <div className={classes.larva_name}>Larva</div>
           <div className={classes.larva_value}>

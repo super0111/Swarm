@@ -42,6 +42,8 @@ const Options = () => {
     durationFormart, setDurationFormart,
     selectedTheme, setSelectedTheme,
     advanceUnit, setAdvanceUnit,
+    automatic, setAutomatic,
+    numberRange, setNumberRange,
   } = useContext(Context)
   const [ isShow, setIsShow ] = useState(false);
   const [ cookies, setCookie, removeCookie ] = useCookies([ "startTime" ]);
@@ -94,14 +96,30 @@ const Options = () => {
         <strong style={{marginLeft: 5}}>Maximum frames per second</strong>
       </div>
       <div className={classes.flex}>
-        <Form.Check.Input type='checkbox' isValid />
-        <strong style={{marginLeft: 5}}> Automatic</strong>
+        <Form.Check.Input 
+          type='checkbox' 
+          checked={automatic}
+          onChange={ () =>{ setAutomatic(!automatic)} }
+          />
+        <strong style={{marginLeft: 5}}>Automatic</strong>
       </div>
-      <Form.Range />
+      <Form.Range 
+        disabled={automatic}
+        step="1" 
+        min="1"
+        max="60"
+        value={numberRange}
+        onChange={e => setNumberRange(e.target.value)}
+      />
       <div className={classes.flex}>
         <span>About</span>
-        <Form.Check.Input type='number' isValid className={classes.inputNumber} />
-        <span>fps. Time between frames: 37ms</span>
+        <Form.Check.Input
+          className={classes.inputNumber}
+          disabled={automatic}
+          type='number'
+          value={numberRange}
+        />
+        <span>fps. Time between frames: { (1000/numberRange).toFixed(0) }ms</span>
       </div>
       <br></br>
       <p>Reduce this setting if the game is slowing down your computer. This doesn't affect gameplay; your units won't produce resources any faster or slower.</p>

@@ -14,7 +14,9 @@ const Meat = () => {
     queenCount, 
     fasterDrones,
     twinDronesCounter,
-    fasterDronesCounter,  
+    fasterDronesCounter,
+    fasterNotify,
+    twinNotify,
   } = useContext(Context);
   const [ cookies ] = useCookies([ "goodStart" ]);
   const [ isShow, setIsShow ] = useState(true);
@@ -35,7 +37,8 @@ const Meat = () => {
           </Link> : ""
         }
         <Link className={classes.drone} to="/meat/drone">
-          { queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
+          {
+            (queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1)) && fasterNotify === "never" || twinNotify === "never" ? "" : queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
             <BsFillArrowUpCircleFill size={16} color="#337ab7" /> : ""
           }
           <div className={classes.drone_name}>Drone</div>

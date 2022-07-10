@@ -28,7 +28,8 @@ const LarvaDetails = () => {
     }
   }, [meatCount])
 
-  const handleHatchery = () => {
+  const handleHatchery = (i) => {
+    console.log("iiiiiiiiiiiii", i)
     if(hatcheryClick === 0 ) {
       const time = new Date();
       setCookie("hatcheryTime", time, {path: "/"});

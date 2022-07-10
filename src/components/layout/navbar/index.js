@@ -37,9 +37,12 @@ const Navbar = () => {
     droneCount,
     larvaeNum,
     queenCount,
-    hatcheryCount,
+    hatcheryClick,
     fasterDronesCounter,
     twinDronesCounter,
+    upgradeNotify,
+    fasterNotify,
+    twinNotify,
   } = useContext(Context);
   const [ active, setActive ] = useState("meat");
   const styles = {
@@ -51,6 +54,14 @@ const Navbar = () => {
   };
   const newValue = func(meatCount);
   const newLarvaeValue = func(larvaeNum);
+
+  const handleCheapestUpgrade = () => {
+    console.log("clicicicicici")
+  }
+
+  const handleAllupgrade = () => {
+    
+  }
 
   return (
     <Nav 
@@ -67,7 +78,8 @@ const Navbar = () => {
             style={{ color: '#337ab7', textDecoration: "none" }}
           >
             { newValue } meat {' '}
-            { queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
+            { 
+              (queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1)) && (fasterNotify === "never" || twinNotify === "never") ? "" : queenCount >= Math.pow(10, twinDronesCounter) || droneCount > 66*(fasterDronesCounter+1) ?
               <BsFillArrowUpCircleFill size={12} color="#337ab7" /> : ""
             }
           </LinkButton>
@@ -82,7 +94,8 @@ const Navbar = () => {
             style={{ color: "#337ab7", textDecoration: "none" }}
           >
             { newLarvaeValue } {' '}larvae{' '}
-            { meatCount > 300*(Math.pow(10, hatcheryCount)) ?
+            { 
+              upgradeNotify === "never" ? "" : meatCount > 300*(Math.pow(10, hatcheryClick)) ?
               <BsFillArrowUpCircleFill size={12} color="#337ab7" /> : ""
             }
           </LinkButton>
@@ -94,11 +107,11 @@ const Navbar = () => {
         }
         id="nav-dropdown"
       >
-        <NavDropdown.Item eventKey="4.1">
+        <NavDropdown.Item onclick={handleAllupgrade} eventKey="4.1">
           {' '}
           <BsArrowUpCircleFill /> Buy all 1 upgrade
         </NavDropdown.Item>
-        <NavDropdown.Item eventKey="4.2">
+        <NavDropdown.Item onClick={handleCheapestUpgrade} eventKey="4.2">
           {' '}
           <BsArrowUpCircle /> Buy cheapest 1 upgrade
         </NavDropdown.Item>

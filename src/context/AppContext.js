@@ -35,6 +35,9 @@ const [ expansionNotify , setExpansionNotify ] = useState(cookies.expansionNotif
 const [ fasterNotify , setFasterNotify ] = useState(cookies.fasterNotify || "buyable");
 const [ twinNotify , setTwinNotify ] = useState(cookies.twinNotify || "buyable");
 
+const [ automatic, setAutomatic ] = useState(cookies.autoMatic || true);
+const [ numberRange, setNumberRange ] = useState(cookies.numberRange || 10);
+
 useInterval(() => {
   setMeatCount((prevCounter) => {
     return prevCounter + droneCount;
@@ -82,6 +85,8 @@ useEffect(() => {
         upgradeNotify, setUpgradeNotify,
         fasterNotify , setFasterNotify,
         twinNotify , setTwinNotify,
+        automatic, setAutomatic,
+        numberRange, setNumberRange,
       }}
     >
       {children}
