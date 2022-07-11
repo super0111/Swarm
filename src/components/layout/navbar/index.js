@@ -38,11 +38,13 @@ const Navbar = () => {
     larvaeNum,
     queenCount,
     hatcheryClick,
+    hatcheryCount,
     fasterDronesCounter,
     twinDronesCounter,
     upgradeNotify,
     fasterNotify,
     twinNotify,
+    handleHatchery,
   } = useContext(Context);
   const [ active, setActive ] = useState("meat");
   const styles = {
@@ -56,11 +58,11 @@ const Navbar = () => {
   const newLarvaeValue = func(larvaeNum);
 
   const handleCheapestUpgrade = () => {
-    console.log("clicicicicici")
+    handleHatchery(hatcheryClick-1);
   }
 
   const handleAllupgrade = () => {
-    
+    handleHatchery(hatcheryCount-1);
   }
 
   return (
@@ -107,14 +109,29 @@ const Navbar = () => {
         }
         id="nav-dropdown"
       >
-        <NavDropdown.Item onclick={handleAllupgrade} eventKey="4.1">
-          {' '}
-          <BsArrowUpCircleFill /> Buy all 1 upgrade
-        </NavDropdown.Item>
-        <NavDropdown.Item onClick={handleCheapestUpgrade} eventKey="4.2">
-          {' '}
-          <BsArrowUpCircle /> Buy cheapest 1 upgrade
-        </NavDropdown.Item>
+            <NavDropdown.Item 
+              disabled={ 
+                hatcheryCount > 0 && 
+                meatCount > 300*(Math.pow(10, hatcheryCount-1)) && 
+                meatCount > 300*(Math.pow(10, hatcheryClick-1)) ? false : true 
+              } 
+              onclick={handleAllupgrade} eventKey="4.1"
+            >
+              {' '}
+              <BsArrowUpCircleFill /> Buy all 1 upgrade
+            </NavDropdown.Item>
+            <NavDropdown.Item 
+              disabled={ 
+                hatcheryCount > 0 && 
+                meatCount > 300*(Math.pow(10, hatcheryCount-1)) && 
+                meatCount > 300*(Math.pow(10, hatcheryClick-1)) ? false : true 
+              }  
+              onClick={handleCheapestUpgrade} eventKey="4.2"
+            >
+              {' '}
+              <BsArrowUpCircle /> Buy cheapest 1 upgrade
+            </NavDropdown.Item>
+        
         <NavDropdown.Divider />
         <NavDropdown.Item eventKey="4.3">
           {' '}

@@ -23,7 +23,7 @@ const [ twinDronesCounter, setTwinDrones ] = useState(Number(cookies.twinDronesC
 const [ queenCount, setQueenCount ] = useState(Number(cookies.queenCount) || 0);
 const [ queenClick, setQueenClick ] = useState(Number(cookies.queenClick) || 0);
 const [ hatcheryCount, setHatcheryCount ]= useState(Number(cookies.hatcheryCount) || 0 );
-const [ hatcheryClick, setHatcheryClick ] = useState(Number(cookies.hatcheryClick) || 0);
+const [ hatcheryClick, setHatcheryClick ] = useState(Number(cookies.hatcheryClick) || 1);
 const [ hatcheryTime, setHatcheryTime ]= useState(Number(cookies.hatcheryTime) || undefined );
 const [ startCount, setStartCount ]= useState(Number(cookies.startCount) || 0);
 const [ currentUser, setCurrentUser ] = useState("");
@@ -38,6 +38,16 @@ const [ twinNotify , setTwinNotify ] = useState(cookies.twinNotify || "buyable")
 const [ automatic, setAutomatic ] = useState(cookies.autoMatic || true);
 const [ numberRange, setNumberRange ] = useState(cookies.numberRange || 10);
 
+const handleHatchery = (i) => {
+  console.log("IIIIIIIIII", i)
+  if(hatcheryClick === 1 ) {
+    const time = new Date();
+    setCookie("hatcheryTime", time, {path: "/"});
+  }
+  setMeatCount(meatCount - 300*Math.pow(10, i));
+  setHatcheryClick(hatcheryClick + i);
+}
+
 useInterval(() => {
   setMeatCount((prevCounter) => {
     return prevCounter + droneCount;
@@ -46,7 +56,7 @@ useInterval(() => {
     return prevCounter + queenCount;
   });
   setLarvaeNum((prevCounter) => {
-    return prevCounter + (hatcheryCount+1);
+    return prevCounter + (hatcheryClick);
   });
 }, 1000)
 
@@ -72,9 +82,9 @@ useEffect(() => {
         twinDronesCounter, setTwinDrones,
         queenCount, setQueenCount,
         queenClick, setQueenClick,
-        hatcheryCount, setHatcheryCount,
         currentUser, setCurrentUser,
         hatcheryClick, setHatcheryClick,
+        hatcheryCount, setHatcheryCount,
         hatcheryTime, setHatcheryTime,
         velocity, setVelocity,
         numFormart, setNumFormart,
@@ -87,6 +97,7 @@ useEffect(() => {
         twinNotify , setTwinNotify,
         automatic, setAutomatic,
         numberRange, setNumberRange,
+        handleHatchery,
       }}
     >
       {children}

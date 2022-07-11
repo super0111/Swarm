@@ -8,36 +8,25 @@ import Upgrades from "./upgrades";
 import Expansion from "./expansion";
 
 const LarvaDetails = () => {
-  const { 
-    velocity,
-    larvaeNum,
-    meatCount, setMeatCount,
-    hatcheryClick, setHatcheryClick,
-    hatcheryCount, setHatcheryCount,
-  } = useContext(Context);
+    const { 
+      velocity,
+      larvaeNum,
+      meatCount, setMeatCount,
+      hatcheryClick, setHatcheryClick,
+      hatcheryCount, setHatcheryCount,
+      handleHatchery,
+    } = useContext(Context);
   const [ cookies, setCookie ] = useCookies([ "hatcheryTime" ]);
   const [hatPercentage, setHatPercentage] = useState(0);
-  const [ buttons, setButtons ] = useState([1]);
 
   useEffect(() => {
     const _hatPercentage = Math.trunc( meatCount/(300*(Math.pow(10, hatcheryCount)))*100);
     setHatPercentage(_hatPercentage % 100);
     if( _hatPercentage > 100 ) {
       setHatcheryCount(hatcheryCount +1);
-      setButtons([...buttons, hatcheryCount + 1]);
     }
   }, [meatCount])
 
-  const handleHatchery = (i) => {
-    console.log("iiiiiiiiiiiii", i)
-    if(hatcheryClick === 0 ) {
-      const time = new Date();
-      setCookie("hatcheryTime", time, {path: "/"});
-    }
-    setHatcheryCount( hatcheryCount + 1);
-    setMeatCount(meatCount - 300*Math.pow(10, hatcheryClick));
-    setHatcheryClick(hatcheryClick + 1);
-  }
 
   return (
     <div className={classes.larvaDetails}>
@@ -49,11 +38,11 @@ const LarvaDetails = () => {
       <p>
         You earn {' '}
         {
-          velocity === "seconds" ? 1*hatcheryClick+1
-        : velocity === "minutes" ? 60*hatcheryClick+1
-        : velocity === "hours" ? 3600*hatcheryClick+1
-        : velocity === "days" ? 86400*hatcheryClick+1
-        : 900*hatcheryClick+1
+          velocity === "seconds" ? 1*hatcheryClick
+        : velocity === "minutes" ? 60*hatcheryClick
+        : velocity === "hours" ? 3600*hatcheryClick
+        : velocity === "days" ? 86400*hatcheryClick
+        : 900*hatcheryClick
         }
         {' '}larvae per {' '}
         {velocity}. (×1.00 bonus)</p>
