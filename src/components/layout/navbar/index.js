@@ -125,7 +125,7 @@ const Navbar = () => {
                 hatcheryCount > 0 && 
                 meatCount > 300*(Math.pow(10, hatcheryCount-1)) && 
                 meatCount > 300*(Math.pow(10, hatcheryClick-1)) ? false : true 
-              }  
+              }
               onClick={handleCheapestUpgrade} eventKey="4.2"
             >
               {' '}
