@@ -1,6 +1,6 @@
 const Larvae = () => {
     return (
-        <>llllllllll</>
+        <>Larave</>
     )
 }
 
