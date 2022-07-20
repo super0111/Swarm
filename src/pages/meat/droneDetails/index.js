@@ -25,23 +25,23 @@ const DroneDetails = () => {
       <p>You own {droneCount === 0 ? "no" : droneCount} drones.</p>
       <p>Each produces {' '}
         {
-          velocity === "seconds" ? "1.00000"
-        : velocity === "minutes" ? "60"
-        : velocity === "hours" ? "3,600"
-        : velocity === "days" ? "86,400"
-        : "900/wrap"
+            velocity === "seconds" ? "1.00000"
+          : velocity === "minutes" ? "60"
+          : velocity === "hours" ? "3,600"
+          : velocity === "days" ? "86,400"
+          : "900/wrap"
         }
-          {' '}meat per {' '}
+          {' '} meat per {' '}
         {velocity}. (×1.00 bonus)
       </p>
       <p>
         In total, they produce {' '}
         {
-          velocity === "seconds" ? 1*droneCount
-        : velocity === "minutes" ? 60*droneCount
-        : velocity === "hours" ? 3600*droneCount
-        : velocity === "days" ? 86400*droneCount
-        : 900*droneCount
+            velocity === "seconds" ? 1*droneCount
+          : velocity === "minutes" ? 60*droneCount
+          : velocity === "hours" ? 3600*droneCount
+          : velocity === "days" ? 86400*droneCount
+          : 900*droneCount
         }
         {' '}meat per {velocity}
       </p>

@@ -20,7 +20,7 @@ const DroneHatching = () => {
   }
   const handleHatch = (i) => {
     if(larvaeNum < i) {
-      alert("You do't have enough larvae");
+      alert("You do't have enough larva");
       return;
     }
 
