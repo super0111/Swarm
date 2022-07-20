@@ -27,11 +27,11 @@ const Larvae = () => {
           <div className={classes.larva_value}>
             {larvaeNum} +
             {
-            velocity === "seconds" ? "1.00/sec"
-          : velocity === "minutes" ? "60/min"
-          : velocity === "hours" ? "3,600/hr"
-          : velocity === "days" ? "86,400/day"
-          : "900/wrap"
+                velocity === "seconds" ? "1.00/sec"
+              : velocity === "minutes" ? "60/min"
+              : velocity === "hours" ? "3,600/hr"
+              : velocity === "days" ? "86,400/day"
+              : "900/wrap"
             }
           </div>
         </Link>
