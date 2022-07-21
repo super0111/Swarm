@@ -63,7 +63,7 @@ const DroneHatching = () => {
               larvaeNum < Math.trunc(meatCount/10) ? 
               larvaeNum : Math.trunc(meatCount/10)
             } 
-            {' '}drones will cost {' '}
+            {' '} drones will cost {' '}
             { 
               larvaeNum < Math.trunc(meatCount/10) ? 
               ((larvaeNum/meatCount)*100).toFixed(1) : ((Math.trunc(meatCount/10)/meatCount)*100).toFixed(1) 
@@ -77,7 +77,7 @@ const DroneHatching = () => {
           <p>
             You can hatch one drone every {' '} 
             { 10/droneCount < 1 ? 1 : droneCount === 0 ? 10 : (10/droneCount).toFixed(0) }
-            {' '}seconds, using {' '}
+            {' '} seconds, using {' '}
             {
               larvaeNum < Math.trunc(meatCount/10) ? 
               ((larvaeNum/meatCount)*100).toFixed(0) : ((Math.trunc(meatCount/10)/meatCount)*100).toFixed(1) 
