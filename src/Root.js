@@ -146,7 +146,7 @@ export const Root = () => {
         <Routes>
           <Route exact path="/" element={ <Meat />} />
           <Route exact path="/meat" element={ <Meat />}>
-          <Route path="queen" element={<QueenDeatils />} />
+            <Route path="queen" element={<QueenDeatils />} />
             <Route path="drone" element={<DroneDeatils />} />
             <Route path="meat" element={<MeatDetails />} />
           </Route>

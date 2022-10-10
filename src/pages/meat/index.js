@@ -54,8 +54,7 @@ const Meat = () => {
       <Col md={9}>
         <Outlet />
       </Col>
-      {
-        cookies.goodStart === true ?
+      { cookies.goodStart === true ?
         <Card className={classes.cardItem}>
           <Card.Body>
             <div className={classes.body}>
