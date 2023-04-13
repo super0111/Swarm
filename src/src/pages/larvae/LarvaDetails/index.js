@@ -15,7 +15,6 @@ const LarvaDetails = () => {
     hatcheryCount, setHatcheryCount,
     setHatcheryTime,
   } = useContext(Context);
-  const [ cookies, setCookie ] = useCookies([ "hatcheryTime" ]);
   const [hatPercentage, setHatPercentage] = useState(0);
   const [ buttons, setButtons ] = useState([1]);
 
