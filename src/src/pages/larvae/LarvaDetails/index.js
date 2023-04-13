@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import { useCookies } from "react-cookie";
 import { Button, ProgressBar } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import { BsXLg } from "react-icons/bs";
