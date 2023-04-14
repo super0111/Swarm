@@ -4,11 +4,11 @@ import { Button, ProgressBar } from "react-bootstrap"
 import { Context } from "../../../../context/AppContext";
 
 const TwinDrones = () => {
+  const [hatPercentage, setHatPercentage] = useState(0);
   const { 
     queenCount, setQueenCount,
     twinDronesCounter, setTwinDrones, 
   } = useContext(Context);
-  const [hatPercentage, setHatPercentage] = useState(0);
 
   useEffect(() => {
     const _hatPercentage = Math.trunc( queenCount/(Math.pow(10, twinDronesCounter))*100);
