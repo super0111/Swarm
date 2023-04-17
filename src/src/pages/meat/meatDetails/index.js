@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useCookies } from "react-cookie";
 import { BsXLg } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import { Context } from "../../../context/AppContext";
